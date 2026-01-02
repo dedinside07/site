@@ -1,15 +1,11 @@
-import express from 'express';
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+const express = require('express');
+const fs = require('fs').promises;
+const path = require('path');
 
 /* =========================================================
    КОНСТАНТЫ И НАСТРОЙКИ
 ========================================================= */
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
 const AUTH_FILE = path.join(DATA_DIR, 'auth.json');
 const SUBMISSIONS_FILE = path.join(DATA_DIR, 'submissions.json');
@@ -74,6 +70,29 @@ async function init() {
 }
 
 /* =========================================================
+   МАРШРУТЫ API
+========================================================= */
+app.get('/api/users', async (req, res) => {
+    try {
+        const authData = await loadJSON(AUTH_FILE);
+        res.json(authData?.users || []);
+    } catch (err) {
+        res.status(500).json({ error: 'Ошибка загрузки пользователей' });
+    }
+});
+
+app.get('/api/submissions', async (req, res) => {
+    try {
+        const submissions = await loadJSON(SUBMISSIONS_FILE);
+        res.json(submissions || []);
+    } catch (err) {
+        res.status(500).json({ error: 'Ошибка загрузки заявок' });
+    }
+});
+
+// Добавьте другие маршруты по необходимости
+
+/* =========================================================
    ЗАПУСК СЕРВЕРА
 ========================================================= */
 app.listen(PORT, async () => {
@@ -94,3 +113,5 @@ app.listen(PORT, async () => {
     console.log('   admin / manager / viewer');
     console.log('============================================================');
 });
+
+module.exports = app;
