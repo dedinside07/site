@@ -1,0 +1,2414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugaric IT // Начните ваш диалог</title>
+    
+    <!-- Cloudflare Turnstile (замена reCAPTCHA) -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    
+    <link rel="stylesheet" href="contact_styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <style>
+        /* Скрытые стили для защиты */
+        .j-security { 
+            all: unset !important;
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            position: absolute !important;
+            left: -99999px !important;
+            top: -99999px !important;
+            pointer-events: none !important;
+            user-select: none !important;
+        }
+        
+        /* Анимации для чайной церемонии */
+        @keyframes messageFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(10px) rotate(-3deg); }
+        }
+        
+        @keyframes teaSteam {
+            0%, 100% { 
+                opacity: 0.1;
+                transform: translateY(0) scale(0.8);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: translateY(-40px) scale(1.2);
+            }
+        }
+        
+        @keyframes cupBreath {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+        
+        @keyframes leafFloat {
+            0%, 100% { 
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.4;
+            }
+            33% { 
+                transform: translate(15px, -25px) rotate(120deg);
+                opacity: 0.6;
+            }
+            66% { 
+                transform: translate(-10px, 20px) rotate(240deg);
+                opacity: 0.5;
+            }
+        }
+        
+        /* Стили для уведомлений */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 141, 161, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(45, 42, 58, 0.12);
+            z-index: 10000;
+            animation: slideIn 0.4s ease;
+            max-width: 400px;
+            font-family: var(--font-sora);
+            font-size: 0.9rem;
+            color: var(--ink-deep);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .notification.error {
+            border-color: rgba(255, 107, 139, 0.3);
+            background: rgba(255, 255, 255, 0.98);
+        }
+        
+        .notification.success {
+            border-color: rgba(138, 255, 209, 0.3);
+            background: rgba(255, 255, 255, 0.98);
+        }
+        
+        .notification.warning {
+            border-color: rgba(255, 200, 161, 0.3);
+            background: rgba(255, 255, 255, 0.98);
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .notification-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .notification-close {
+            margin-left: auto;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+        }
+        
+        .notification-close:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Защитные элементы (невидимые) -->
+    <div id="securityShield" class="j-security">
+        <input type="text" id="h_website" name="h_website" autocomplete="off" tabindex="-1">
+        <input type="email" id="h_email_confirm" name="h_email_confirm" autocomplete="off" tabindex="-1">
+        <input type="checkbox" id="h_terms" name="h_terms" checked tabindex="-1">
+        <textarea id="h_comments" name="h_comments" tabindex="-1"></textarea>
+        <input type="hidden" id="h_timestamp" name="h_timestamp" value="">
+        <input type="hidden" id="h_fingerprint" name="h_fingerprint" value="">
+    </div>
+    
+    <!-- Деликатный фон -->
+    <div class="digital-gradient-bg" aria-hidden="true">
+        <div class="gradient-flow flow-1"></div>
+        <div class="gradient-flow flow-2"></div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="contacts-temple" id="contactsTemple">
+        <!-- Шапка сайта -->
+        <header class="temple-header" id="mainHeader">
+            <div class="header-container">
+                <!-- Логотип -->
+                <a href="/homepage" class="temple-seal" aria-label="Вернуться на главную">
+                    <div class="seal-symbol">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="var(--ink-deep)" stroke-width="0.8" stroke-opacity="0.8"/>
+                            <path d="M24 10V38M10 24H38" stroke="var(--magic-blush)" stroke-width="0.8" stroke-opacity="0.4"/>
+                            <circle cx="24" cy="24" r="8" stroke="var(--magic-lavender)" stroke-width="0.6" stroke-opacity="0.5"/>
+                            <circle cx="24" cy="24" r="3" fill="var(--magic-blush)" fill-opacity="0.3"/>
+                            <path d="M18 18L30 30M18 30L30 18" stroke="var(--magic-mint)" stroke-width="0.4" stroke-opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <div class="seal-text">
+                        <span class="seal-kanji">茶</span>
+                        <span class="seal-subtitle">JUGARIC IT</span>
+                    </div>
+                </a>
+
+                <!-- Навигация -->
+                <nav class="temple-nav" aria-label="Навигация">
+                    <div class="digital-nav">
+                        <a href="/homepage" class="nav-item">
+                            <span class="nav-tech">⊹</span>
+                            <span class="nav-label">ГЛАВНАЯ</span>
+                            <span class="nav-kanji">家</span>
+                        </a>
+                        <a href="/approaches" class="nav-item">
+                            <span class="nav-tech">⎔</span>
+                            <span class="nav-label">ПОДХОДЫ</span>
+                            <span class="nav-kanji">道</span>
+                        </a>
+                        <a href="/cases" class="nav-item">
+                            <span class="nav-tech">⟁</span>
+                            <span class="nav-label">ПРОЕКТЫ</span>
+                            <span class="nav-kanji">庭</span>
+                        </a>
+                        <a href="/contact" class="nav-item active" aria-current="page">
+                            <span class="nav-tech">⚙</span>
+                            <span class="nav-label">КОНТАКТЫ</span>
+                            <span class="nav-kanji">茶</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <!-- Кнопка вдохновения -->
+                <button class="magic-call" aria-label="Активировать вдохновение">
+                    <span class="call-aura"></span>
+                    <span class="call-text">ВДОХНОВЕНИЕ</span>
+                    <i data-feather="sparkles" class="call-icon" aria-hidden="true"></i>
+                </button>
+
+                <!-- Мобильное меню -->
+                <button class="mobile-menu-toggle" id="menuToggle" aria-label="Открыть меню">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
+            </div>
+            
+            <!-- Индикатор секции -->
+            <div class="section-tracker">
+                <div class="tracker-dot" style="--color: var(--magic-blush);"></div>
+                <div class="tracker-dot" style="--color: var(--magic-lavender);"></div>
+                <div class="tracker-dot" style="--color: var(--magic-mint);"></div>
+                <div class="tracker-dot active" style="--color: var(--magic-peach);"></div>
+            </div>
+        </header>
+
+        <main class="contacts-main">
+            <!-- Hero Section -->
+            <section id="contact-hero" class="contact-hero" aria-labelledby="hero-title">
+                <div class="hero-container">
+                    <!-- Контент -->
+                    <div class="hero-content">
+                        <div class="hero-gate">
+                            <h1 id="hero-title" class="hero-title">
+                                <span class="title-line">
+                                    <span class="title-char" data-char="В">В</span>
+                                    <span class="title-char" data-char="А">А</span>
+                                    <span class="title-char" data-char="Ш">Ш</span>
+                                    <span class="title-char" data-char="А">А</span>
+                                </span>
+                                <span class="title-line">
+                                    <span class="title-char" data-char="И">И</span>
+                                    <span class="title-char" data-char="Д">Д</span>
+                                    <span class="title-char" data-char="Е">Е</span>
+                                    <span class="title-char" data-char="Я">Я</span>
+                                </span>
+                                <span class="title-line">
+                                    <span class="title-char" data-char="Ж">Ж</span>
+                                    <span class="title-char" data-char="Д">Д</span>
+                                    <span class="title-char" data-char="Ё">Ё</span>
+                                    <span class="title-char" data-char="Т">Т</span>
+                                </span>
+                                <span class="title-line">
+                                    <span class="title-char" data-char="В">В</span>
+                                    <span class="title-char" data-char="С">С</span>
+                                    <span class="title-char" data-char="Т">Т</span>
+                                    <span class="title-char" data-char="Р">Р</span>
+                                    <span class="title-char" data-char="Е">Е</span>
+                                    <span class="title-char" data-char="Ч">Ч</span>
+                                    <span class="title-char" data-char="И">И</span>
+                                </span>
+                            </h1>
+                            <div class="hero-subtitle">
+                                <span class="subtitle-text">
+                                    Мы всегда открыты к новым идеям и вдохновляющим беседам. 
+                                    Расскажите нам о вашей мечте, и мы поможем ей расцвести.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Чайная церемония -->
+                    <div class="tea-ceremony-visual">
+                        <div class="tea-container">
+                            <!-- Чайная чашка -->
+                            <div class="tea-cup">
+                                <div class="cup-body">
+                                    <div class="tea-liquid">
+                                        <div class="tea-surface">
+                                            <div class="surface-ripple r1"></div>
+                                            <div class="surface-ripple r2"></div>
+                                        </div>
+                                    </div>
+                                    <div class="cup-handle"></div>
+                                </div>
+                                <div class="cup-saucer"></div>
+                            </div>
+                            
+                            <!-- Пар от чая -->
+                            <div class="tea-steam">
+                                <div class="steam-wisp w1"></div>
+                                <div class="steam-wisp w2"></div>
+                                <div class="steam-wisp w3"></div>
+                            </div>
+                            
+                            <!-- Летящие сообщения -->
+                            <div class="floating-messages">
+                                <div class="message-bubble m1">
+                                    <div class="bubble-text">💡</div>
+                                </div>
+                                <div class="message-bubble m2">
+                                    <div class="bubble-text">✨</div>
+                                </div>
+                                <div class="message-bubble m3">
+                                    <div class="bubble-text">🌸</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Листья чая -->
+                            <div class="tea-leaves">
+                                <div class="leaf l1"></div>
+                                <div class="leaf l2"></div>
+                                <div class="leaf l3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Деликатная аура -->
+                    <div class="hero-aura" aria-hidden="true">
+                        <div class="aura-circle circle-1"></div>
+                        <div class="aura-circle circle-2"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция формы -->
+            <section id="contact-form" class="contact-form-section" aria-labelledby="form-title">
+                <div class="form-container">
+                    <header class="form-header">
+                        <div class="form-marker">
+                            <span class="marker-text">話</span>
+                        </div>
+                        <h2 id="form-title" class="form-title">
+                            Расскажите о Вашей Идее
+                        </h2>
+                        <p class="form-subtitle">
+                            Каждый великий проект начинается с искреннего диалога. 
+                            Заполните форму ниже, и мы свяжемся с вами, чтобы обсудить, 
+                            как воплотить вашу мечту в реальность.
+                        </p>
+                    </header>
+
+                    <!-- Форма обратной связи -->
+                    <form id="ideaForm" class="digital-contact-form" novalidate>
+                        <!-- Строка имени и фамилии -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">
+                                    Имя *
+                                    <span class="required-indicator"></span>
+                                </label>
+                                <div class="form-input-wrapper">
+                                    <input type="text" 
+                                           id="firstName" 
+                                           name="firstName"
+                                           class="form-input"
+                                           placeholder=" "
+                                           required
+                                           maxlength="16"
+                                           autocomplete="given-name"
+                                           data-validation="name">
+                                    <div class="input-underline"></div>
+                                    <i data-feather="user" class="input-icon" aria-hidden="true"></i>
+                                    <div class="input-validation"></div>
+                                </div>
+                                <div class="form-hint">Как к вам обращаться? (до 16 символов)</div>
+                                <div class="character-counter">
+                                    <span class="counter-current">0</span>
+                                    <span class="counter-separator">/</span>
+                                    <span class="counter-max">16</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">
+                                    Фамилия
+                                    <span class="optional-indicator">(необязательно)</span>
+                                </label>
+                                <div class="form-input-wrapper">
+                                    <input type="text" 
+                                           id="lastName" 
+                                           name="lastName"
+                                           class="form-input"
+                                           placeholder=" "
+                                           maxlength="16"
+                                           autocomplete="family-name"
+                                           data-validation="name">
+                                    <div class="input-underline"></div>
+                                    <i data-feather="user" class="input-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="form-hint">(до 16 символов)</div>
+                                <div class="character-counter">
+                                    <span class="counter-current">0</span>
+                                    <span class="counter-separator">/</span>
+                                    <span class="counter-max">16</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Строка контактов -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    Email *
+                                    <span class="required-indicator"></span>
+                                </label>
+                                <div class="form-input-wrapper">
+                                    <input type="email" 
+                                           id="email" 
+                                           name="email"
+                                           class="form-input"
+                                           placeholder=" "
+                                           required
+                                           maxlength="32"
+                                           autocomplete="email"
+                                           data-validation="email">
+                                    <div class="input-underline"></div>
+                                    <i data-feather="mail" class="input-icon" aria-hidden="true"></i>
+                                    <div class="input-validation"></div>
+                                </div>
+                                <div class="form-hint">На этот адрес придёт ответ (до 32 символов)</div>
+                                <div class="character-counter">
+                                    <span class="counter-current">0</span>
+                                    <span class="counter-separator">/</span>
+                                    <span class="counter-max">32</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">
+                                    Телефон
+                                    <span class="optional-indicator">(необязательно)</span>
+                                </label>
+                                <div class="form-input-wrapper">
+                                    <input type="tel" 
+                                           id="phone" 
+                                           name="phone"
+                                           class="form-input"
+                                           placeholder="+7 999 123 45 67"
+                                           autocomplete="tel"
+                                           data-validation="phone">
+                                    <div class="input-underline"></div>
+                                    <i data-feather="phone" class="input-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="form-hint">Простой формат: +7 XXX XXX XX XX</div>
+                            </div>
+                        </div>
+
+                        <!-- Cloudflare Turnstile -->
+                        <div class="cf-turnstile" 
+                             data-sitekey="0x4AAAAAACHMI2-N2oBw0SJZ" 
+                             data-callback="onTurnstileSuccess"
+                             style="margin: 20px 0; display: none;"></div>
+
+                        <!-- Сообщение об успешной отправке -->
+                        <div id="successMessage" class="success-message" aria-live="polite" style="display: none;">
+                            <div class="success-content">
+                                <div class="success-icon">
+                                    <i data-feather="check-circle" aria-hidden="true"></i>
+                                </div>
+                                <div class="success-text">
+                                    <h3 class="success-title">Спасибо! Ваша заявка принята</h3>
+                                    <p class="success-description">
+                                        Мы скоро свяжемся с вами, чтобы обсудить детали. 
+                                        Пока можно выпить чашечку чая ☕
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Кнопка отправки -->
+                        <div class="form-actions">
+                            <button type="submit" class="submit-button" id="submitButton">
+                                <span class="submit-aura"></span>
+                                <span class="submit-text">НАЧАТЬ ДИАЛОГ</span>
+                                <i data-feather="send" class="submit-icon" aria-hidden="true"></i>
+                                <div class="submit-loader" aria-hidden="true">
+                                    <div class="loader-dot"></div>
+                                    <div class="loader-dot"></div>
+                                    <div class="loader-dot"></div>
+                                </div>
+                            </button>
+                            
+                            <div class="form-notice">
+                                <i data-feather="info" class="notice-icon" aria-hidden="true"></i>
+                                <span class="notice-text">* Обязательные поля</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Секция других способов связи -->
+            <section id="other-contacts" class="other-contacts-section" aria-labelledby="contacts-title">
+                <div class="contacts-container">
+                    <header class="contacts-header">
+                        <h2 id="contacts-title" class="contacts-title">
+                            Другие Возможности Связи
+                        </h2>
+                        <p class="contacts-subtitle">
+                            Иногда проще начать разговор другим способом
+                        </p>
+                    </header>
+
+                    <div class="contacts-grid">
+                        <!-- Email -->
+                        <article class="contact-method" tabindex="0">
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <i data-feather="mail" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="method-name">Электронная почта</h3>
+                                <a href="mailto:info@jugaricit.com" class="method-detail">
+                                    info@jugaricit.com
+                                </a>
+                                <p class="method-description">
+                                    Отправьте письмо напрямую. Отвечаем в течение 24 часов.
+                                </p>
+                            </div>
+                            <div class="method-aura" aria-hidden="true"></div>
+                        </article>
+
+                        <!-- Социальные сети -->
+                        <article class="contact-method" tabindex="0">
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <i data-feather="users" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="method-name">Социальные сети</h3>
+                                <div class="social-links">
+                                    <a href="#" class="social-link" aria-label="LinkedIn">
+                                        <i data-feather="linkedin" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="social-link" aria-label="Behance">
+                                        <i data-feather="image" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="social-link" aria-label="GitHub">
+                                        <i data-feather="github" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <p class="method-description">
+                                    Следите за нашими проектами и исследованиями.
+                                </p>
+                            </div>
+                            <div class="method-aura" aria-hidden="true"></div>
+                        </article>
+
+                        <!-- Созвон -->
+                        <article class="contact-method" tabindex="0">
+                            <div class="method-content">
+                                <div class="method-icon">
+                                    <i data-feather="video" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="method-name">Онлайн-встреча</h3>
+                                <div class="method-detail">
+                                    По предварительной договорённости
+                                </div>
+                                <p class="method-description">
+                                    Обсудим вашу идею вживую. Выберем удобный для вас формат.
+                                </p>
+                            </div>
+                            <div class="method-aura" aria-hidden="true"></div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция уверенности -->
+            <section id="assurance" class="assurance-section" aria-label="Наши гарантии">
+                <div class="assurance-container">
+                    <div class="assurance-content">
+                        <div class="assurance-icon">
+                            <i data-feather="shield" aria-hidden="true"></i>
+                        </div>
+                        <div class="assurance-text">
+                            <h3 class="assurance-title">Конфиденциальность и внимание</h3>
+                            <p class="assurance-description">
+                                Каждая идея, которой вы делитесь, остаётся между нами. 
+                                Мы относимся к вашим проектам с максимальным вниманием и уважением.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="assurance-decoration" aria-hidden="true">
+                        <div class="assurance-petal p1"></div>
+                        <div class="assurance-petal p2"></div>
+                        <div class="assurance-petal p3"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Подвал сайта -->
+        <footer class="temple-foundation" aria-label="Основание студии">
+            <div class="foundation-container">
+                <div class="foundation-content">
+                    <div class="foundation-seal" aria-hidden="true">
+                        <div class="final-seal">信</div>
+                    </div>
+                    <div class="foundation-text">
+                        <p class="foundation-line">Jugaric IT — пространство для диалога</p>
+                        <p class="foundation-line">где каждая идея находит внимательного слушателя</p>
+                        <p class="foundation-line">и становится началом прекрасного проекта</p>
+                    </div>
+                </div>
+
+                <div class="foundation-links" aria-label="Дополнительные разделы">
+                    <a href="#contact-form" class="foundation-link">Рассказать об идее</a>
+                    <a href="#other-contacts" class="foundation-link">Другие способы</a>
+                    <a href="#assurance" class="foundation-link">Наши гарантии</a>
+                </div>
+
+                <div class="foundation-energy" aria-hidden="true">
+                    <div class="energy-flow">
+                        <div class="flow-dot dot-1"></div>
+                        <div class="flow-dot dot-2"></div>
+                        <div class="flow-dot dot-3"></div>
+                    </div>
+                    <span class="energy-text">ДИАЛОГ ОТКРЫТ</span>
+                </div>
+            </div>
+
+            <div class="foundation-base">
+                <div class="base-ink-flow"></div>
+                <div class="base-copyright">
+                    © 2024 Jugaric IT. Готовы слушать и создавать вместе.
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+// ===================== КОНФИГУРАЦИЯ =====================
+// ВСЕ эти настройки нужно обновить перед использованием!
+
+const JUGARIC_CONFIG = {
+    // ========== ОБЩИЕ НАСТРОЙКИ ==========
+    debugMode: window.location.hostname === 'localhost' || 
+               window.location.hostname === '127.0.0.1' || 
+               window.location.hostname === 'jugaricit.ru', // ← ИЗМЕНИТЬ для продакшена
+    
+    apiEndpoint: '/api/submit', // ← ПРОВЕРИТЬ путь к вашему API
+    
+    // ========== CLOUDFLARE TURNSTILE ==========
+    turnstile: {
+        enabled: true, // ← ВКЛЮЧИТЬ в продакшене
+        siteKey: '0x4AAAAAACHMI2-N2oBw0SJZ', // ← ПОЛУЧИТЬ на cloudflare.com
+        secretKey: '0x4AAAAAACHMI0tvwJYNP0NA1fjnsrBYCuk', // ← ТОЛЬКО для сервера
+        showOnSuspicion: true, // Показывать только при подозрениях
+        theme: 'auto' // 'light', 'dark', 'auto'
+    },
+    
+    // ========== ПОВЕДЕНЧЕСКИЙ АНАЛИЗ ==========
+    behaviorAnalysis: {
+        enabled: true,
+        minFormTime: 3000, // 3 секунды минимум для заполнения
+        maxFormTime: 300000, // 5 минут максимум
+        mouseMoveThreshold: 5, // Минимум движений мыши
+        keyPressThreshold: 3, // Минимум нажатий клавиш
+        humanScoreThreshold: 5 // Минимальный балл для "человека"
+    },
+    
+    // ========== HONEYPOT НАСТРОЙКИ ==========
+    honeypot: {
+        enabled: true,
+        fields: [
+            { id: 'h_website', type: 'url', expected: 'http://example.com' },
+            { id: 'h_email_confirm', type: 'email', expected: 'spam@example.com' },
+            { id: 'h_terms', type: 'checkbox', expected: true }, // Должен быть checked
+            { id: 'h_comments', type: 'textarea', expected: 'This is spam comment' }
+        ],
+        trapTimeout: 5000, // Через 5 сек меняем значения
+        randomizeValues: true // Случайные значения для каждого пользователя
+    },
+    
+    // ========== CSRF И СЕССИЯ ==========
+    security: {
+        csrfExpiry: 3600000, // 1 час
+        sessionExpiry: 86400000, // 24 часа
+        refreshTokens: true // Обновлять токены после отправки
+    },
+    
+    // ========== УВЕДОМЛЕНИЯ ==========
+    notifications: {
+        enabled: true,
+        position: 'top-right', // 'top-right', 'top-left', 'bottom-right', 'bottom-left'
+        duration: {
+            success: 5000,
+            error: 7000,
+            warning: 6000,
+            info: 4000
+        }
+    },
+    
+    // ========== СЕРВЕРНАЯ КОММУНИКАЦИЯ ==========
+    server: {
+        timeout: 10000, // 10 секунд таймаут
+        retryAttempts: 2, // Попытки повторной отправки
+        headers: {
+            'X-Application': 'Jugaric-IT-Contact-Form',
+            'X-Version': '1.0.0'
+        }
+    },
+    
+    // ========== ЛОГИРОВАНИЕ ==========
+    logging: {
+        enabled: true,
+        level: 'warn', // 'debug', 'info', 'warn', 'error', 'none'
+        maxEntries: 50,
+        sanitizeData: true // Очищать чувствительные данные
+    }
+};
+
+// ===================== СИСТЕМА БЕЗОПАСНОСТИ =====================
+
+window.SecuritySystem = {
+    config: JUGARIC_CONFIG,
+    
+    // Состояние системы
+    state: {
+        initialized: false,
+        sessionId: '',
+        csrfToken: '',
+        formStartTime: 0,
+        mouseMovements: [],
+        keyPressCount: 0,
+        focusEvents: [],
+        turnstileToken: null,
+        behaviorScore: 0,
+        isHuman: false,
+        submissions: [],
+        honeypotValues: {},
+        fingerprint: '',
+        formMetrics: {
+            timeOnPage: 0,
+            scrollDepth: 0,
+            interactions: 0
+        }
+    },
+    
+    // Логирование
+    log(message, level = 'info', data = null) {
+        if (!this.config.logging.enabled || this.config.logging.level === 'none') return;
+        
+        const levels = ['debug', 'info', 'warn', 'error'];
+        const currentLevelIndex = levels.indexOf(this.config.logging.level);
+        const messageLevelIndex = levels.indexOf(level);
+        
+        if (messageLevelIndex < currentLevelIndex) return;
+        
+        const timestamp = new Date().toISOString();
+        const prefix = `[${timestamp}] [${level.toUpperCase()}]`;
+        
+        if (this.config.debugMode) {
+            console[level](`🔐 ${prefix} ${message}`, data || '');
+        }
+        
+        // Сохраняем в историю
+        this.state.submissions.push({
+            timestamp,
+            level,
+            message,
+            data: this.config.logging.sanitizeData ? this.sanitizeLogData(data) : data
+        });
+        
+        // Ограничиваем историю
+        if (this.state.submissions.length > this.config.logging.maxEntries) {
+            this.state.submissions.shift();
+        }
+    },
+    
+    // Очистка чувствительных данных для логов
+    sanitizeLogData(data) {
+        if (!data || typeof data !== 'object') return data;
+        
+        const sanitized = JSON.parse(JSON.stringify(data));
+        const sensitiveFields = ['email', 'phone', 'csrfToken', 'sessionId', 'fingerprint'];
+        
+        sensitiveFields.forEach(field => {
+            if (sanitized[field]) {
+                sanitized[field] = '***REDACTED***';
+            }
+        });
+        
+        return sanitized;
+    },
+    
+    // Инициализация системы безопасности
+    init() {
+        if (this.state.initialized) {
+            this.log('Система уже инициализирована', 'warn');
+            return;
+        }
+        
+        try {
+            this.log('Инициализация системы безопасности', 'info');
+            
+            // Генерация идентификаторов
+            this.generateIdentifiers();
+            
+            // Установка времени начала
+            this.state.formStartTime = Date.now();
+            
+            // Начало отслеживания метрик
+            this.startMetricsTracking();
+            
+            // Установка скрытых полей
+            this.setupHiddenFields();
+            
+            // Инициализация отслеживания поведения
+            if (this.config.behaviorAnalysis.enabled) {
+                this.initBehaviorTracking();
+            }
+            
+            // Настройка Turnstile
+            if (this.config.turnstile.enabled) {
+                this.initTurnstile();
+            }
+            
+            this.state.initialized = true;
+            this.log('Система безопасности успешно инициализирована', 'info', {
+                sessionId: this.state.sessionId.substring(0, 10) + '...',
+                fingerprint: this.state.fingerprint.substring(0, 10) + '...'
+            });
+            
+        } catch (error) {
+            this.log('Ошибка инициализации системы безопасности', 'error', error);
+            // Продолжаем работу даже при ошибке инициализации
+        }
+    },
+    
+    // Генерация идентификаторов
+    generateIdentifiers() {
+        // Session ID с временной меткой и случайными данными
+        const timestamp = Date.now();
+        const randomPart = Math.random().toString(36).substr(2, 12);
+        const userAgentHash = this.hashString(navigator.userAgent.substr(0, 50));
+        
+        this.state.sessionId = [
+            'sess',
+            timestamp,
+            randomPart,
+            userAgentHash,
+            screen.width,
+            screen.height,
+            this.getTimezoneString()
+        ].join('_');
+        
+        // CSRF токен (криптографически безопасный)
+        if (window.crypto && window.crypto.getRandomValues) {
+            const array = new Uint8Array(32);
+            window.crypto.getRandomValues(array);
+            this.state.csrfToken = Array.from(array, 
+                byte => byte.toString(16).padStart(2, '0')).join('');
+        } else {
+            // Fallback для старых браузеров
+            this.state.csrfToken = this.generateFallbackToken();
+        }
+        
+        // Цифровой отпечаток браузера
+        this.state.fingerprint = this.generateFingerprint();
+        
+        this.log('Идентификаторы сгенерированы', 'debug', {
+            sessionIdLength: this.state.sessionId.length,
+            csrfTokenLength: this.state.csrfToken.length,
+            fingerprintLength: this.state.fingerprint.length
+        });
+    },
+    
+    // Хеширование строки
+    hashString(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return Math.abs(hash).toString(36);
+    },
+    
+    // Получение строки часового пояса
+    getTimezoneString() {
+        try {
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const offset = new Date().getTimezoneOffset();
+            return `${timezone}_${offset}`;
+        } catch (e) {
+            return 'unknown';
+        }
+    },
+    
+    // Fallback токен для старых браузеров
+    generateFallbackToken() {
+        return 'fb_' + Date.now() + '_' + 
+               Math.random().toString(36).substr(2, 9) + '_' +
+               Math.random().toString(36).substr(2, 9);
+    },
+    
+    // Генерация цифрового отпечатка браузера
+    generateFingerprint() {
+        const components = [];
+        
+        // 1. Браузер и ОС
+        components.push(navigator.userAgent);
+        components.push(navigator.platform);
+        components.push(navigator.language);
+        
+        // 2. Экран
+        components.push(`${screen.width}x${screen.height}`);
+        components.push(screen.colorDepth);
+        components.push(screen.pixelDepth);
+        
+        // 3. Временная зона
+        components.push(this.getTimezoneString());
+        
+        // 4. Возможности браузера
+        components.push(!!window.sessionStorage);
+        components.push(!!window.localStorage);
+        components.push(!!window.indexedDB);
+        components.push(navigator.cookieEnabled);
+        components.push(navigator.doNotTrack || 'unspecified');
+        
+        // 5. Аппаратные возможности
+        components.push(navigator.hardwareConcurrency || 'unknown');
+        components.push(navigator.maxTouchPoints || 0);
+        components.push('deviceMemory' in navigator ? navigator.deviceMemory : 'unknown');
+        
+        // 6. Время
+        components.push(new Date().getTimezoneOffset());
+        components.push(new Date().getTimezoneOffset() * 60000);
+        
+        // Создаем хеш
+        const combined = components.join('|');
+        return this.hashString(combined);
+    },
+    
+    // Начало отслеживания метрик
+    startMetricsTracking() {
+        this.state.formMetrics.pageLoadTime = Date.now();
+        
+        // Отслеживание времени на странице
+        const updateTimeOnPage = () => {
+            this.state.formMetrics.timeOnPage = Date.now() - this.state.formMetrics.pageLoadTime;
+        };
+        setInterval(updateTimeOnPage, 1000);
+        
+        // Отслеживание глубины скролла
+        let maxScroll = 0;
+        document.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+            
+            if (scrollPercent > maxScroll) {
+                maxScroll = scrollPercent;
+                this.state.formMetrics.scrollDepth = maxScroll;
+            }
+        });
+        
+        // Отслеживание взаимодействий
+        document.addEventListener('click', () => {
+            this.state.formMetrics.interactions++;
+        });
+    },
+    
+    // Настройка скрытых полей
+    setupHiddenFields() {
+        try {
+            const securityShield = document.getElementById('securityShield');
+            if (!securityShield) {
+                this.log('Контейнер безопасности не найден', 'warn');
+                return;
+            }
+            
+            // Генерация значений для honeypot полей
+            this.generateHoneypotValues();
+            
+            // Установка значений
+            this.config.honeypot.fields.forEach(field => {
+                const element = document.getElementById(field.id);
+                if (element) {
+                    element.value = this.state.honeypotValues[field.id] || field.expected;
+                    if (field.type === 'checkbox') {
+                        element.checked = field.expected;
+                    }
+                }
+            });
+            
+            // Установка временной метки
+            const timestampField = document.getElementById('h_timestamp');
+            if (timestampField) {
+                timestampField.value = Date.now();
+            }
+            
+            // Установка отпечатка
+            const fingerprintField = document.getElementById('h_fingerprint');
+            if (fingerprintField) {
+                fingerprintField.value = this.state.fingerprint;
+            }
+            
+            this.log('Скрытые поля настроены', 'debug');
+            
+            // Периодическое обновление значений honeypot
+            if (this.config.honeypot.trapTimeout > 0) {
+                setTimeout(() => {
+                    this.updateHoneypotValues();
+                }, this.config.honeypot.trapTimeout);
+            }
+            
+        } catch (error) {
+            this.log('Ошибка настройки скрытых полей', 'error', error);
+        }
+    },
+    
+    // Генерация значений для honeypot полей
+    generateHoneypotValues() {
+        this.config.honeypot.fields.forEach(field => {
+            if (this.config.honeypot.randomizeValues && field.type !== 'checkbox') {
+                const randomString = Math.random().toString(36).substr(2, 8);
+                this.state.honeypotValues[field.id] = 
+                    field.type === 'email' ? `${randomString}@example.com` :
+                    field.type === 'url' ? `http://${randomString}.com` :
+                    `Random text: ${randomString}`;
+            } else {
+                this.state.honeypotValues[field.id] = field.expected;
+            }
+        });
+    },
+    
+    // Обновление значений honeypot
+    updateHoneypotValues() {
+        if (!this.config.honeypot.randomizeValues) return;
+        
+        this.config.honeypot.fields.forEach(field => {
+            if (field.type !== 'checkbox') {
+                const element = document.getElementById(field.id);
+                if (element) {
+                    const newValue = Math.random().toString(36).substr(2, 10);
+                    element.value = newValue;
+                    this.state.honeypotValues[field.id] = newValue;
+                }
+            }
+        });
+        
+        this.log('Значения honeypot обновлены', 'debug');
+    },
+    
+    // Инициализация отслеживания поведения
+    initBehaviorTracking() {
+        try {
+            // Отслеживание движения мыши
+            document.addEventListener('mousemove', (e) => {
+                this.trackMouseMovement(e);
+            });
+            
+            // Отслеживание нажатий клавиш
+            document.addEventListener('keydown', (e) => {
+                this.trackKeyPress(e);
+            });
+            
+            // Отслеживание фокуса
+            document.addEventListener('focusin', (e) => {
+                this.trackFocus(e);
+            });
+            
+            // Отслеживание кликов
+            document.addEventListener('click', (e) => {
+                this.trackClick(e);
+            });
+            
+            // Отслеживание скролла
+            let lastScrollTime = 0;
+            document.addEventListener('scroll', () => {
+                const now = Date.now();
+                if (now - lastScrollTime > 100) {
+                    this.state.behaviorScore += 0.2;
+                    lastScrollTime = now;
+                }
+            });
+            
+            this.log('Отслеживание поведения инициализировано', 'debug');
+            
+        } catch (error) {
+            this.log('Ошибка инициализации отслеживания поведения', 'error', error);
+        }
+    },
+    
+    // Отслеживание движения мыши
+    trackMouseMovement(event) {
+        const movement = {
+            x: event.clientX,
+            y: event.clientY,
+            time: Date.now(),
+            velocity: this.calculateMouseVelocity(event)
+        };
+        
+        this.state.mouseMovements.push(movement);
+        
+        // Ограничиваем размер массива
+        if (this.state.mouseMovements.length > 100) {
+            this.state.mouseMovements.shift();
+        }
+    },
+    
+    // Расчет скорости движения мыши
+    calculateMouseVelocity(event) {
+        if (this.state.mouseMovements.length < 2) return 0;
+        
+        const lastMove = this.state.mouseMovements[this.state.mouseMovements.length - 2];
+        const timeDiff = Date.now() - lastMove.time;
+        
+        if (timeDiff === 0) return 0;
+        
+        const distance = Math.sqrt(
+            Math.pow(event.clientX - lastMove.x, 2) + 
+            Math.pow(event.clientY - lastMove.y, 2)
+        );
+        
+        return distance / timeDiff;
+    },
+    
+    // Отслеживание нажатий клавиш
+    trackKeyPress(event) {
+        const ignoredKeys = ['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'Escape', 'CapsLock'];
+        if (!ignoredKeys.includes(event.key)) {
+            this.state.keyPressCount++;
+        }
+    },
+    
+    // Отслеживание фокуса
+    trackFocus(event) {
+        if (event.target.closest('#ideaForm')) {
+            this.state.focusEvents.push({
+                element: event.target.tagName,
+                id: event.target.id,
+                time: Date.now(),
+                valueLength: event.target.value ? event.target.value.length : 0
+            });
+        }
+    },
+    
+    // Отслеживание кликов
+    trackClick(event) {
+        this.state.formMetrics.interactions++;
+    },
+    
+    // Инициализация Turnstile
+    initTurnstile() {
+        try {
+            // Проверяем, загружена ли библиотека
+            if (typeof turnstile === 'undefined') {
+                this.log('Cloudflare Turnstile не загружен', 'warn');
+                return;
+            }
+            
+            // Находим контейнер Turnstile
+            const turnstileContainer = document.querySelector('.cf-turnstile');
+            if (!turnstileContainer) {
+                this.log('Контейнер Turnstile не найден', 'warn');
+                return;
+            }
+            
+            // Настройка параметров
+            turnstileContainer.dataset.sitekey = this.config.turnstile.siteKey;
+            turnstileContainer.dataset.theme = this.config.turnstile.theme;
+            
+            // Прячем Turnstile изначально
+            turnstileContainer.style.display = 'none';
+            
+            this.log('Turnstile инициализирован', 'debug', {
+                siteKey: this.config.turnstile.siteKey.substring(0, 10) + '...',
+                theme: this.config.turnstile.theme
+            });
+            
+        } catch (error) {
+            this.log('Ошибка инициализации Turnstile', 'error', error);
+        }
+    },
+    
+    // Показать Turnstile
+    showTurnstile() {
+        if (!this.config.turnstile.enabled) return;
+        
+        const turnstileContainer = document.querySelector('.cf-turnstile');
+        if (!turnstileContainer) return;
+        
+        turnstileContainer.style.display = 'block';
+        
+        // Инициализируем Turnstile
+        if (window.turnstile) {
+            window.turnstile.render(turnstileContainer, {
+                sitekey: this.config.turnstile.siteKey,
+                theme: this.config.turnstile.theme,
+                callback: (token) => {
+                    this.state.turnstileToken = token;
+                    this.hideTurnstile();
+                    this.log('Turnstile токен получен', 'debug');
+                    
+                    // Автоматически отправляем форму
+                    const form = document.getElementById('ideaForm');
+                    if (form) {
+                        form.dispatchEvent(new Event('submit', { cancelable: true }));
+                    }
+                },
+                'error-callback': () => {
+                    this.log('Ошибка Turnstile', 'error');
+                    this.showNotification(
+                        'Ошибка проверки безопасности. Пожалуйста, обновите страницу.',
+                        'error'
+                    );
+                }
+            });
+        }
+    },
+    
+    // Скрыть Turnstile
+    hideTurnstile() {
+        const turnstileContainer = document.querySelector('.cf-turnstile');
+        if (turnstileContainer) {
+            turnstileContainer.style.display = 'none';
+        }
+    },
+    
+    // Проверка honeypot полей
+    checkHoneypots() {
+        if (!this.config.honeypot.enabled) {
+            return { valid: true, triggered: false };
+        }
+        
+        let triggeredFields = [];
+        
+        this.config.honeypot.fields.forEach(field => {
+            const element = document.getElementById(field.id);
+            if (!element) return;
+            
+            let isValid = true;
+            
+            if (field.type === 'checkbox') {
+                // Чекбокс должен быть отмечен (боты часто пропускают)
+                if (element.checked !== field.expected) {
+                    isValid = false;
+                    triggeredFields.push(field.id);
+                }
+            } else {
+                // Текстовые поля должны быть пустыми или содержать ожидаемые значения
+                const value = element.value.trim();
+                const expectedValue = this.state.honeypotValues[field.id] || field.expected;
+                
+                if (value && value !== expectedValue) {
+                    isValid = false;
+                    triggeredFields.push(field.id);
+                }
+            }
+        });
+        
+        return {
+            valid: triggeredFields.length === 0,
+            triggered: triggeredFields.length > 0,
+            triggeredFields
+        };
+    },
+    
+    // Анализ поведения пользователя
+    analyzeBehavior() {
+        const analysis = {
+            score: 0,
+            isHuman: false,
+            flags: [],
+            metrics: {}
+        };
+        
+        // 1. Время заполнения формы
+        const timeSpent = Date.now() - this.state.formStartTime;
+        analysis.metrics.timeSpent = timeSpent;
+        
+        if (timeSpent < this.config.behaviorAnalysis.minFormTime) {
+            analysis.flags.push('form_too_fast');
+        } else if (timeSpent > this.config.behaviorAnalysis.maxFormTime) {
+            analysis.flags.push('form_too_slow');
+        } else {
+            analysis.score += 2;
+        }
+        
+        // 2. Движения мыши
+        analysis.metrics.mouseMovements = this.state.mouseMovements.length;
+        if (this.state.mouseMovements.length >= this.config.behaviorAnalysis.mouseMoveThreshold) {
+            const mousePattern = this.analyzeMousePatterns();
+            if (mousePattern.humanLike) {
+                analysis.score += 3;
+                analysis.metrics.mousePattern = mousePattern;
+            } else {
+                analysis.flags.push('unnatural_mouse_movement');
+            }
+        } else {
+            analysis.flags.push('insufficient_mouse_movement');
+        }
+        
+        // 3. Нажатия клавиш
+        analysis.metrics.keyPresses = this.state.keyPressCount;
+        if (this.state.keyPressCount >= this.config.behaviorAnalysis.keyPressThreshold) {
+            analysis.score += 2;
+        } else {
+            analysis.flags.push('insufficient_typing');
+        }
+        
+        // 4. События фокуса
+        analysis.metrics.focusEvents = this.state.focusEvents.length;
+        if (this.state.focusEvents.length >= 2) {
+            analysis.score += 1;
+        }
+        
+        // 5. Общие метрики
+        analysis.metrics.behaviorScore = this.state.behaviorScore;
+        analysis.metrics.scrollDepth = this.state.formMetrics.scrollDepth;
+        analysis.metrics.interactions = this.state.formMetrics.interactions;
+        analysis.metrics.timeOnPage = this.state.formMetrics.timeOnPage;
+        
+        if (this.state.behaviorScore > 0.5) {
+            analysis.score += 1;
+        }
+        
+        if (this.state.formMetrics.scrollDepth > 20) {
+            analysis.score += 1;
+        }
+        
+        // Определяем, человек ли это
+        analysis.isHuman = analysis.score >= this.config.behaviorAnalysis.humanScoreThreshold;
+        this.state.isHuman = analysis.isHuman;
+        this.state.behaviorScore = analysis.score;
+        
+        return analysis;
+    },
+    
+    // Анализ паттернов движения мыши
+    analyzeMousePatterns() {
+        if (this.state.mouseMovements.length < 10) {
+            return { humanLike: false, reason: 'insufficient_data' };
+        }
+        
+        let velocityChanges = 0;
+        let directionChanges = 0;
+        let totalVelocity = 0;
+        let totalDistance = 0;
+        
+        for (let i = 1; i < this.state.mouseMovements.length; i++) {
+            const prev = this.state.mouseMovements[i - 1];
+            const curr = this.state.mouseMovements[i];
+            
+            // Суммируем скорость и расстояние
+            totalVelocity += curr.velocity;
+            totalDistance += Math.sqrt(
+                Math.pow(curr.x - prev.x, 2) + 
+                Math.pow(curr.y - prev.y, 2)
+            );
+            
+            // Изменения скорости
+            if (Math.abs(curr.velocity - prev.velocity) > 0.1) {
+                velocityChanges++;
+            }
+            
+            // Изменения направления
+            if (i > 1) {
+                const prev2 = this.state.mouseMovements[i - 2];
+                const angle1 = Math.atan2(curr.y - prev.y, curr.x - prev.x);
+                const angle2 = Math.atan2(prev.y - prev2.y, prev.x - prev2.x);
+                
+                if (Math.abs(angle1 - angle2) > 0.1) {
+                    directionChanges++;
+                }
+            }
+        }
+        
+        const avgVelocity = totalVelocity / (this.state.mouseMovements.length - 1);
+        const avgDistance = totalDistance / (this.state.mouseMovements.length - 1);
+        
+        const totalMovements = this.state.mouseMovements.length - 2;
+        const velocityRatio = totalMovements > 0 ? velocityChanges / totalMovements : 0;
+        const directionRatio = totalMovements > 0 ? directionChanges / totalMovements : 0;
+        
+        // Боты: слишком гладкие или слишком хаотичные движения
+        // Люди: умеренная изменчивость
+        const humanLike = 
+            velocityRatio > 0.3 && velocityRatio < 0.8 &&
+            directionRatio > 0.2 && directionRatio < 0.7 &&
+            avgVelocity > 0.01 && avgVelocity < 10 &&
+            avgDistance > 1 && avgDistance < 100;
+        
+        return {
+            humanLike,
+            velocityRatio,
+            directionRatio,
+            avgVelocity,
+            avgDistance,
+            totalMovements
+        };
+    },
+    
+    // Создание данных для отправки
+    createSubmissionData(formData) {
+        const behavior = this.analyzeBehavior();
+        const honeypotCheck = this.checkHoneypots();
+        
+        return {
+            // Основные данные формы
+            form: {
+                name: formData.name || '',
+                surname: formData.surname || '',
+                email: formData.email || '',
+                phone: formData.phone || ''
+            },
+            
+            // Метаданные безопасности
+            security: {
+                sessionId: this.state.sessionId,
+                csrfToken: this.state.csrfToken,
+                fingerprint: this.state.fingerprint,
+                turnstileToken: this.state.turnstileToken,
+                honeypotCheck: {
+                    triggered: honeypotCheck.triggered,
+                    triggeredFields: honeypotCheck.triggeredFields
+                }
+            },
+            
+            // Метаданные запроса
+            metadata: {
+                timestamp: Date.now(),
+                formTime: Date.now() - this.state.formStartTime,
+                userAgent: navigator.userAgent,
+                screen: `${screen.width}x${screen.height}`,
+                timezone: this.getTimezoneString(),
+                language: navigator.language,
+                referrer: document.referrer || 'direct'
+            },
+            
+            // Данные поведения
+            behavior: {
+                score: behavior.score,
+                isHuman: behavior.isHuman,
+                flags: behavior.flags,
+                metrics: behavior.metrics
+            },
+            
+            // Системные метрики
+            system: {
+                timezoneOffset: new Date().getTimezoneOffset(),
+                cookiesEnabled: navigator.cookieEnabled,
+                doNotTrack: navigator.doNotTrack || 'unspecified',
+                platform: navigator.platform,
+                vendor: navigator.vendor
+            }
+        };
+    },
+    
+    // Валидация перед отправкой
+    validateSubmission(formData) {
+        const validation = {
+            valid: true,
+            errors: [],
+            warnings: []
+        };
+        
+        // 1. Проверка honeypot
+        if (this.config.honeypot.enabled) {
+            const honeypotCheck = this.checkHoneypots();
+            if (honeypotCheck.triggered) {
+                validation.valid = false;
+                validation.errors.push(`honeypot_triggered:${honeypotCheck.triggeredFields.join(',')}`);
+                this.log('Honeypot сработал', 'warn', honeypotCheck);
+            }
+        }
+        
+        // 2. Анализ поведения
+        if (this.config.behaviorAnalysis.enabled) {
+            const behavior = this.analyzeBehavior();
+            
+            if (!behavior.isHuman) {
+                validation.valid = false;
+                validation.errors.push(`behavior_failed:score=${behavior.score},flags=${behavior.flags.join(',')}`);
+                this.log('Поведенческий анализ не пройден', 'warn', behavior);
+            }
+            
+            if (behavior.flags.length > 0) {
+                validation.warnings.push(`behavior_flags:${behavior.flags.join(',')}`);
+            }
+        }
+        
+        // 3. Проверка Turnstile (если включено и требуется)
+        if (this.config.turnstile.enabled && this.config.turnstile.showOnSuspicion) {
+            const behavior = this.analyzeBehavior();
+            if (!behavior.isHuman && !this.state.turnstileToken) {
+                this.showTurnstile();
+                validation.valid = false;
+                validation.errors.push('turnstile_required');
+            }
+        }
+        
+        // 4. Проверка времени заполнения
+        const timeSpent = Date.now() - this.state.formStartTime;
+        if (timeSpent < 1000) { // Меньше 1 секунды
+            validation.valid = false;
+            validation.errors.push('form_completed_too_fast');
+        }
+        
+        // 5. Проверка данных формы
+        if (!formData.name || formData.name.length < 2) {
+            validation.errors.push('invalid_name');
+        }
+        
+        if (!formData.email || !this.validateEmail(formData.email)) {
+            validation.errors.push('invalid_email');
+        }
+        
+        if (formData.phone && !this.validatePhone(formData.phone)) {
+            validation.warnings.push('invalid_phone_format');
+        }
+        
+        // Если есть критические ошибки - блокируем отправку
+        const criticalErrors = validation.errors.filter(err => 
+            err.includes('honeypot') || 
+            err.includes('behavior') ||
+            err.includes('turnstile') ||
+            err.includes('too_fast')
+        );
+        
+        if (criticalErrors.length > 0) {
+            validation.valid = false;
+        }
+        
+        this.log('Валидация завершена', 'debug', validation);
+        
+        return validation;
+    },
+    
+    // Валидация email
+    validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    },
+    
+    // Валидация телефона
+    validatePhone(phone) {
+        const clean = phone.replace(/\D/g, '');
+        return clean.length >= 10 && clean.length <= 15;
+    },
+    
+    // Отправка данных
+    async submitForm(formData) {
+        let attempt = 0;
+        const maxAttempts = this.config.server.retryAttempts + 1;
+        
+        while (attempt < maxAttempts) {
+            attempt++;
+            
+            try {
+                this.log(`Попытка отправки ${attempt}/${maxAttempts}`, 'info');
+                
+                // Валидация
+                const validation = this.validateSubmission(formData);
+                if (!validation.valid) {
+                    throw new Error(`VALIDATION_FAILED: ${validation.errors.join(', ')}`);
+                }
+                
+                // Создание данных для отправки
+                const submissionData = this.createSubmissionData(formData);
+                
+                // Подготовка запроса
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), this.config.server.timeout);
+                
+                // Отправка на сервер
+                const response = await fetch(this.config.apiEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': this.state.csrfToken,
+                        'X-Session-ID': this.state.sessionId,
+                        'X-Request-ID': 'req_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                        ...this.config.server.headers
+                    },
+                    body: JSON.stringify(submissionData),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP_ERROR: ${response.status} ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                // Обновление CSRF токена после успешной отправки
+                if (this.config.security.refreshTokens && result.success) {
+                    this.generateIdentifiers();
+                }
+                
+                this.log('Отправка успешна', 'info', {
+                    status: response.status,
+                    success: result.success
+                });
+                
+                return result;
+                
+            } catch (error) {
+                this.log(`Ошибка отправки (попытка ${attempt})`, 'error', error);
+                
+                if (attempt >= maxAttempts) {
+                    throw error;
+                }
+                
+                // Ждем перед повторной попыткой
+                await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+            }
+        }
+        
+        throw new Error('Все попытки отправки завершились неудачей');
+    },
+    
+    // Показать уведомление
+    showNotification(message, type = 'info', duration = null) {
+        if (!this.config.notifications.enabled) return;
+        
+        try {
+            // Определяем длительность
+            if (duration === null) {
+                duration = this.config.notifications.duration[type] || 5000;
+            }
+            
+            // Создаем уведомление
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            // Определяем позицию
+            const position = this.config.notifications.position;
+            notification.style.cssText = `
+                position: fixed;
+                ${position.includes('top') ? 'top: 20px;' : 'bottom: 20px;'}
+                ${position.includes('right') ? 'right: 20px;' : 'left: 20px;'}
+                padding: 16px 24px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 141, 161, 0.2);
+                border-radius: 12px;
+                box-shadow: 0 8px 32px rgba(45, 42, 58, 0.12);
+                z-index: 10000;
+                animation: slideIn 0.4s ease;
+                max-width: 400px;
+                font-family: var(--font-sora);
+                font-size: 0.9rem;
+                color: var(--ink-deep);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            `;
+            
+            // Цвета в зависимости от типа
+            if (type === 'error') {
+                notification.style.borderColor = 'rgba(255, 107, 139, 0.3)';
+                notification.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else if (type === 'success') {
+                notification.style.borderColor = 'rgba(138, 255, 209, 0.3)';
+                notification.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else if (type === 'warning') {
+                notification.style.borderColor = 'rgba(255, 200, 161, 0.3)';
+                notification.style.background = 'rgba(255, 255, 255, 0.98)';
+            }
+            
+            // Иконка
+            const icon = document.createElement('i');
+            icon.setAttribute('data-feather', this.getIconForType(type));
+            icon.className = 'notification-icon';
+            
+            // Текст
+            const text = document.createElement('span');
+            text.textContent = message;
+            text.style.flex = '1';
+            
+            // Кнопка закрытия
+            const close = document.createElement('span');
+            close.className = 'notification-close';
+            close.innerHTML = '&times;';
+            close.style.cssText = `
+                margin-left: auto;
+                cursor: pointer;
+                opacity: 0.6;
+                transition: opacity 0.2s ease;
+                font-size: 1.2rem;
+                line-height: 1;
+            `;
+            close.onmouseenter = () => close.style.opacity = '1';
+            close.onmouseleave = () => close.style.opacity = '0.6';
+            close.onclick = () => notification.remove();
+            
+            // Собираем уведомление
+            notification.appendChild(icon);
+            notification.appendChild(text);
+            notification.appendChild(close);
+            
+            // Добавляем на страницу
+            document.body.appendChild(notification);
+            
+            // Инициализируем иконку
+            if (window.feather) {
+                window.feather.replace();
+            }
+            
+            // Автоматическое скрытие
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.style.animation = 'slideOut 0.4s ease';
+                        setTimeout(() => notification.remove(), 400);
+                    }
+                }, duration);
+            }
+            
+            // Анимация появления
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        opacity: 0;
+                        transform: translateX(${position.includes('right') ? '100px' : '-100px'});
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+                @keyframes slideOut {
+                    from {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                    to {
+                        opacity: 0;
+                        transform: translateX(${position.includes('right') ? '100px' : '-100px'});
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            setTimeout(() => style.remove(), 500);
+            
+            return notification;
+            
+        } catch (error) {
+            this.log('Ошибка показа уведомления', 'error', error);
+        }
+    },
+    
+    // Получение иконки для типа уведомления
+    getIconForType(type) {
+        const icons = {
+            'info': 'info',
+            'success': 'check-circle',
+            'error': 'alert-circle',
+            'warning': 'alert-triangle'
+        };
+        return icons[type] || 'info';
+    },
+    
+    // Сброс состояния формы
+    resetFormState() {
+        this.state.formStartTime = Date.now();
+        this.state.mouseMovements = [];
+        this.state.keyPressCount = 0;
+        this.state.focusEvents = [];
+        this.state.turnstileToken = null;
+        this.state.behaviorScore = 0;
+        this.state.honeypotValues = {};
+        
+        // Генерируем новые идентификаторы
+        this.generateIdentifiers();
+        
+        // Обновляем скрытые поля
+        this.setupHiddenFields();
+        
+        this.log('Состояние формы сброшено', 'debug');
+    }
+};
+
+// ===================== ГЛАВНЫЙ КЛАСС СТРАНИЦЫ =====================
+
+class ContactsPage {
+    constructor() {
+        this.form = null;
+        this.isSubmitting = false;
+        this.formData = {
+            name: '',
+            surname: '',
+            email: '',
+            phone: ''
+        };
+    }
+    
+    init() {
+        this.log('Инициализация страницы контактов', 'info');
+        
+        // Инициализация системы безопасности
+        window.SecuritySystem.init();
+        
+        // Инициализация иконок
+        this.initIcons();
+        
+        // Настройка страницы
+        this.setupForm();
+        this.setupAnimations();
+        this.setupInteractiveElements();
+        this.setupMobileMenu();
+        this.setupSmoothNavigation();
+        this.animateTitle();
+        
+        this.log('Страница контактов инициализирована', 'info');
+    }
+    
+    log(message, level = 'info', data = null) {
+        if (window.SecuritySystem) {
+            window.SecuritySystem.log(message, level, data);
+        } else if (JUGARIC_CONFIG.debugMode) {
+            console[level](`📝 ${message}`, data || '');
+        }
+    }
+    
+    initIcons() {
+        if (window.feather) {
+            feather.replace();
+        } else {
+            this.log('Feather Icons не загружены', 'warn');
+        }
+    }
+    
+    setupForm() {
+        this.form = document.getElementById('ideaForm');
+        if (!this.form) {
+            this.log('Форма не найдена', 'error');
+            return;
+        }
+        
+        // Маска для телефона
+        const phoneInput = document.getElementById('phone');
+        if (phoneInput) {
+            this.setupPhoneMask(phoneInput);
+        }
+        
+        // Обработчик отправки формы
+        this.form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await this.handleSubmit();
+        });
+        
+        // Валидация полей
+        this.setupFieldValidation();
+        
+        // Счетчики символов
+        this.setupCharacterCounters();
+        
+        // Отслеживание изменений
+        this.setupFormTracking();
+        
+        this.log('Форма настроена', 'debug');
+    }
+    
+    setupPhoneMask(input) {
+        let lastValue = '';
+        
+        input.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 0 && !value.startsWith('7')) {
+                value = '7' + value;
+            }
+            
+            value = value.substring(0, 11);
+            
+            let formatted = '+7';
+            if (value.length > 1) {
+                formatted += ' ' + value.substring(1, 4);
+                if (value.length >= 4) {
+                    formatted += ' ' + value.substring(4, 7);
+                    if (value.length >= 7) {
+                        formatted += ' ' + value.substring(7, 9);
+                        if (value.length >= 9) {
+                            formatted += ' ' + value.substring(9, 11);
+                        }
+                    }
+                }
+            }
+            
+            if (formatted !== lastValue) {
+                e.target.value = formatted;
+                lastValue = formatted;
+            }
+        });
+        
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace') {
+                setTimeout(() => {
+                    lastValue = input.value;
+                }, 0);
+            }
+        });
+        
+        this.log('Маска телефона настроена', 'debug');
+    }
+    
+    setupFieldValidation() {
+        const requiredInputs = this.form.querySelectorAll('input[required]');
+        
+        requiredInputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                this.validateField(input);
+            });
+            
+            input.addEventListener('input', () => {
+                this.clearFieldError(input);
+            });
+        });
+    }
+    
+    validateField(input) {
+        const wrapper = input.closest('.form-input-wrapper');
+        const validationEl = wrapper?.querySelector('.input-validation');
+        
+        if (!input.checkValidity()) {
+            wrapper?.classList.add('error');
+            if (validationEl) {
+                validationEl.innerHTML = '<i data-feather="alert-circle"></i>';
+                if (window.feather) feather.replace();
+            }
+            return false;
+        } else {
+            wrapper?.classList.remove('error');
+            wrapper?.classList.add('valid');
+            if (validationEl) {
+                validationEl.innerHTML = '<i data-feather="check"></i>';
+                if (window.feather) feather.replace();
+            }
+            return true;
+        }
+    }
+    
+    clearFieldError(input) {
+        const wrapper = input.closest('.form-input-wrapper');
+        wrapper?.classList.remove('error');
+        const validationEl = wrapper?.querySelector('.input-validation');
+        if (validationEl) {
+            validationEl.innerHTML = '';
+        }
+    }
+    
+    setupCharacterCounters() {
+        const fields = [
+            { id: 'firstName', max: 16 },
+            { id: 'lastName', max: 16 },
+            { id: 'email', max: 32 }
+        ];
+        
+        fields.forEach(field => {
+            const input = document.getElementById(field.id);
+            if (input) {
+                this.updateCharacterCounter(input, field.max);
+                input.addEventListener('input', () => {
+                    this.updateCharacterCounter(input, field.max);
+                });
+            }
+        });
+    }
+    
+    updateCharacterCounter(input, maxLength) {
+        const counter = input.closest('.form-group')?.querySelector('.character-counter');
+        if (!counter) return;
+        
+        const currentSpan = counter.querySelector('.counter-current');
+        const length = input.value.length;
+        
+        if (currentSpan) {
+            currentSpan.textContent = length;
+            
+            if (length > maxLength * 0.9) {
+                currentSpan.style.color = 'var(--magic-peach)';
+            } else if (length > maxLength * 0.7) {
+                currentSpan.style.color = 'var(--magic-blush)';
+            } else {
+                currentSpan.style.color = 'var(--ink-light)';
+            }
+        }
+    }
+    
+    setupFormTracking() {
+        const inputs = this.form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
+        
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this.updateFormData();
+            });
+        });
+    }
+    
+    updateFormData() {
+        this.formData = {
+            name: document.getElementById('firstName')?.value.trim() || '',
+            surname: document.getElementById('lastName')?.value.trim() || '',
+            email: document.getElementById('email')?.value.trim() || '',
+            phone: document.getElementById('phone')?.value.trim() || ''
+        };
+    }
+    
+    async handleSubmit() {
+        if (this.isSubmitting) {
+            this.log('Форма уже отправляется', 'warn');
+            return;
+        }
+        
+        this.isSubmitting = true;
+        const submitButton = document.getElementById('submitButton');
+        const loader = submitButton?.querySelector('.submit-loader');
+        const submitText = submitButton?.querySelector('.submit-text');
+        
+        // Показываем загрузку
+        if (submitButton && loader && submitText) {
+            submitButton.disabled = true;
+            loader.style.display = 'flex';
+            submitText.textContent = 'ПРОВЕРКА...';
+        }
+        
+        try {
+            // Обновляем данные формы
+            this.updateFormData();
+            
+            // Проверяем базовую валидацию
+            const requiredInputs = this.form.querySelectorAll('input[required]');
+            let isValid = true;
+            let validationErrors = [];
+            
+            requiredInputs.forEach(input => {
+                if (!this.validateField(input)) {
+                    isValid = false;
+                    validationErrors.push(input.id);
+                }
+            });
+            
+            if (!isValid) {
+                throw new Error('Заполните обязательные поля корректно');
+            }
+            
+            // Отправка через систему безопасности
+            this.log('Начало отправки формы', 'info', this.formData);
+            const result = await window.SecuritySystem.submitForm(this.formData);
+            
+            if (result.success) {
+                this.showSuccessMessage();
+                this.resetForm();
+                window.SecuritySystem.resetFormState();
+                
+                this.log('Форма успешно отправлена', 'info', result);
+            } else {
+                throw new Error(result.message || 'Ошибка отправки формы');
+            }
+            
+        } catch (error) {
+            this.log('Ошибка отправки формы', 'error', error);
+            
+            // Определяем тип ошибки и сообщение для пользователя
+            let userMessage = 'Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.';
+            let notificationType = 'error';
+            
+            if (error.message.includes('VALIDATION_FAILED')) {
+                if (error.message.includes('honeypot')) {
+                    userMessage = 'Обнаружена подозрительная активность. Пожалуйста, обновите страницу.';
+                } else if (error.message.includes('behavior')) {
+                    userMessage = 'Поведение при заполнении формы вызвало подозрения. Заполните форму внимательно.';
+                } else if (error.message.includes('form_completed_too_fast')) {
+                    userMessage = 'Пожалуйста, заполняйте форму внимательнее. Слишком быстрая отправка не допускается.';
+                } else if (error.message.includes('turnstile_required')) {
+                    userMessage = 'Требуется дополнительная проверка безопасности.';
+                    notificationType = 'warning';
+                }
+            } else if (error.message.includes('HTTP_ERROR')) {
+                userMessage = 'Проблемы с соединением. Проверьте интернет и попробуйте снова.';
+            } else if (error.message.includes('Заполните обязательные поля')) {
+                userMessage = error.message;
+                notificationType = 'warning';
+            }
+            
+            // Показываем уведомление
+            window.SecuritySystem.showNotification(userMessage, notificationType);
+            
+        } finally {
+            this.isSubmitting = false;
+            
+            // Восстанавливаем кнопку
+            if (submitButton && loader && submitText) {
+                submitButton.disabled = false;
+                loader.style.display = 'none';
+                submitText.textContent = 'НАЧАТЬ ДИАЛОГ';
+            }
+        }
+    }
+    
+    showSuccessMessage() {
+        const successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            successMessage.style.display = 'block';
+            successMessage.style.animation = 'messageSlideIn 0.6s ease';
+            
+            // Показываем системное уведомление
+            window.SecuritySystem.showNotification(
+                'Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.',
+                'success'
+            );
+            
+            // Автоматически скрываем через 5 секунд
+            setTimeout(() => {
+                successMessage.style.animation = 'messageSlideOut 0.6s ease';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 600);
+            }, 5000);
+            
+            // Эффект частиц
+            this.createSuccessParticles();
+        }
+    }
+    
+    createSuccessParticles() {
+        const formContainer = document.querySelector('.form-container');
+        if (!formContainer) return;
+        
+        for (let i = 0; i < 8; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'success-particle';
+            
+            const size = 4 + Math.random() * 6;
+            const duration = 2 + Math.random();
+            const delay = Math.random() * 0.5;
+            
+            const colors = [
+                'rgba(255, 141, 161, 0.6)',
+                'rgba(184, 161, 255, 0.6)',
+                'rgba(138, 255, 209, 0.6)',
+                'rgba(255, 200, 161, 0.6)'
+            ];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            particle.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                background: ${color};
+                border-radius: 50%;
+                filter: blur(1px);
+                animation: successParticleFloat ${duration}s ease-out ${delay}s forwards;
+                z-index: 10;
+            `;
+            
+            particle.style.left = `${20 + Math.random() * 60}%`;
+            particle.style.top = `${50 + Math.random() * 30}%`;
+            
+            formContainer.appendChild(particle);
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.remove();
+                }
+            }, duration * 1000);
+        }
+    }
+    
+    resetForm() {
+        if (this.form) {
+            this.form.reset();
+            this.setupCharacterCounters();
+            
+            const inputs = this.form.querySelectorAll('.form-input-wrapper');
+            inputs.forEach(wrapper => {
+                wrapper.classList.remove('valid', 'error');
+                const validation = wrapper.querySelector('.input-validation');
+                if (validation) validation.innerHTML = '';
+            });
+        }
+    }
+    
+    setupAnimations() {
+        // Анимация чайного пара
+        const steamWisps = document.querySelectorAll('.steam-wisp');
+        steamWisps.forEach((wisp, index) => {
+            const delay = index * 0.3;
+            const duration = 4 + Math.random() * 2;
+            wisp.style.animation = `teaSteam ${duration}s infinite ease-in-out ${delay}s`;
+        });
+        
+        // Анимация плавающих сообщений
+        const messageBubbles = document.querySelectorAll('.message-bubble');
+        messageBubbles.forEach((bubble, index) => {
+            const delay = index * 0.5;
+            const duration = 8 + Math.random() * 4;
+            bubble.style.animation = `messageFloat ${duration}s infinite ease-in-out ${delay}s`;
+        });
+        
+        // Анимация листьев
+        const leaves = document.querySelectorAll('.leaf');
+        leaves.forEach((leaf, index) => {
+            const delay = index * 0.8;
+            const duration = 12 + Math.random() * 6;
+            leaf.style.animation = `leafFloat ${duration}s infinite ease-in-out ${delay}s`;
+        });
+        
+        // Анимация легкого дыхания чашки
+        const teaCup = document.querySelector('.cup-body');
+        if (teaCup) {
+            teaCup.style.animation = 'cupBreath 8s infinite ease-in-out';
+        }
+        
+        this.log('Анимации настроены', 'debug');
+    }
+    
+    setupInteractiveElements() {
+        // Интерактивность методов связи
+        const contactMethods = document.querySelectorAll('.contact-method');
+        contactMethods.forEach(method => {
+            method.addEventListener('mouseenter', () => {
+                method.classList.add('method-hover');
+                const aura = method.querySelector('.method-aura');
+                if (aura) {
+                    aura.style.opacity = '0.15';
+                }
+            });
+            
+            method.addEventListener('mouseleave', () => {
+                method.classList.remove('method-hover');
+                const aura = method.querySelector('.method-aura');
+                if (aura) {
+                    aura.style.opacity = '0.05';
+                }
+            });
+            
+            method.addEventListener('focus', () => {
+                method.classList.add('method-hover');
+            });
+            
+            method.addEventListener('blur', () => {
+                method.classList.remove('method-hover');
+            });
+        });
+        
+        // Интерактивность социальных ссылок
+        const socialLinks = document.querySelectorAll('.social-link');
+        socialLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                link.style.transform = 'scale(1.2) rotate(5deg)';
+            });
+            
+            link.addEventListener('mouseleave', () => {
+                link.style.transform = '';
+            });
+        });
+        
+        // Интерактивность сообщений-эмодзи
+        const messages = document.querySelectorAll('.message-bubble');
+        messages.forEach((message, index) => {
+            message.addEventListener('mouseenter', () => {
+                message.style.transform = 'scale(1.3)';
+            });
+            
+            message.addEventListener('mouseleave', () => {
+                message.style.transform = '';
+            });
+            
+            message.addEventListener('click', () => {
+                document.querySelector('#contact-form').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            });
+        });
+        
+        this.log('Интерактивные элементы настроены', 'debug');
+    }
+    
+    setupMobileMenu() {
+        const menuToggle = document.getElementById('menuToggle');
+        const templeNav = document.querySelector('.temple-nav');
+        
+        if (menuToggle && templeNav) {
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                menuToggle.classList.toggle('active');
+                templeNav.classList.toggle('active');
+            });
+            
+            this.log('Мобильное меню настроено', 'debug');
+        }
+    }
+    
+    setupSmoothNavigation() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        this.log('Плавная навигация настроена', 'debug');
+    }
+    
+    animateTitle() {
+        setTimeout(() => {
+            const letters = document.querySelectorAll('.title-char');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.style.opacity = '1';
+                    letter.style.transform = 'translateY(0)';
+                }, index * 60);
+            });
+        }, 500);
+    }
+}
+
+// ===================== ИНИЦИАЛИЗАЦИЯ =====================
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Создаем и инициализируем главный класс
+    const contactsPage = new ContactsPage();
+    contactsPage.init();
+    
+    // Глобальный доступ (для отладки)
+    if (JUGARIC_CONFIG.debugMode) {
+        window.contactsPage = contactsPage;
+        console.log('🚀 Jugaric IT контакты загружены');
+        console.log('🔧 Конфигурация:', JUGARIC_CONFIG);
+    }
+    
+    // Скрываем системные сообщения в консоли для пользователей
+    if (!JUGARIC_CONFIG.debugMode) {
+        const noop = () => {};
+        console.log = noop;
+        console.warn = noop;
+        console.error = noop;
+        console.info = noop;
+        console.debug = noop;
+    }
+});
+
+// Глобальный обработчик для Turnstile
+window.onTurnstileSuccess = function(token) {
+    if (window.SecuritySystem) {
+        window.SecuritySystem.state.turnstileToken = token;
+        window.SecuritySystem.log('Turnstile токен получен', 'debug');
+        
+        // Автоматически отправляем форму, если она была заблокирована
+        const form = document.getElementById('ideaForm');
+        if (form) {
+            const event = new Event('submit', { cancelable: true });
+            form.dispatchEvent(event);
+        }
+    }
+};
+
+// Добавляем CSS анимации
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes successParticleFloat {
+        0% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(
+                ${Math.random() * 100 - 50}px,
+                ${Math.random() * 100 - 200}px
+            ) scale(0);
+        }
+    }
+    
+    @keyframes fieldErrorShake {
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-5px); }
+        40%, 80% { transform: translateX(5px); }
+    }
+    
+    @keyframes messageSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes messageSlideOut {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+    }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>

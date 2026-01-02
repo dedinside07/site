@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 · Заблудший путник · Jugaric IT</title>
+    <link rel="stylesheet" href="homepage_styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Дополнительные стили для 404 страницы */
+        :root {
+            --magic-blush: rgba(255, 141, 161, 0.5);
+            --magic-lavender: rgba(184, 161, 255, 0.5);
+            --magic-mint: rgba(138, 255, 209, 0.5);
+            --magic-peach: rgba(255, 193, 138, 0.5);
+            --ink-deep: #1a1a2e;
+            --paper-white: #f8f9fa;
+        }
+        
+        .lost-path-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Фон */
+        .lost-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(184, 161, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 141, 161, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 50%, rgba(138, 255, 209, 0.02) 0%, transparent 50%);
+            z-index: -2;
+        }
+        
+        /* Плавающие элементы */
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.05;
+            animation: floatOrb 20s infinite linear;
+            z-index: -1;
+        }
+        
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--magic-blush);
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 250px;
+            height: 250px;
+            background: var(--magic-lavender);
+            bottom: 15%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+        
+        .orb-3 {
+            width: 200px;
+            height: 200px;
+            background: var(--magic-mint);
+            top: 50%;
+            left: 80%;
+            animation-delay: -10s;
+        }
+        
+        @keyframes floatOrb {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(50px, -30px) rotate(90deg);
+            }
+            50% {
+                transform: translate(-30px, 50px) rotate(180deg);
+            }
+            75% {
+                transform: translate(30px, 50px) rotate(270deg);
+            }
+        }
+        
+        /* Сетка данных */
+        .data-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        /* Контент */
+        .lost-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Код ошибки */
+        .error-code {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            font-family: 'Sora', sans-serif;
+        }
+        
+        .code-digit {
+            font-size: 8rem;
+            font-weight: 800;
+            color: var(--paper-white);
+            text-shadow: 0 0 30px rgba(255, 141, 161, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .code-digit.awake {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .code-separator {
+            font-size: 4rem;
+            opacity: 0.3;
+            font-weight: 300;
+            color: var(--magic-lavender);
+        }
+        
+        /* Заголовок */
+        .lost-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--paper-white);
+        }
+        
+        .title-line {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .title-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .title-char.awake {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s ease;
+        }
+        
+        /* Подзаголовок */
+        .lost-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+        }
+        
+        /* Карточки путей */
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem auto;
+            max-width: 1000px;
+        }
+        
+        .path-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-decoration: none;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .path-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 141, 161, 0.1) 0%, 
+                rgba(184, 161, 255, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        
+        .path-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 141, 161, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2),
+                        0 0 0 1px rgba(255, 141, 161, 0.1);
+        }
+        
+        .path-card:hover::before {
+            opacity: 1;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--magic-blush);
+            opacity: 0.8;
+        }
+        
+        .card-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--paper-white);
+        }
+        
+        .card-description {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        .card-ornament {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            font-family: 'Sora', sans-serif;
+        }
+        
+        /* Быстрые ссылки */
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+        
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .quick-link:hover {
+            color: var(--paper-white);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 141, 161, 0.3);
+        }
+        
+        /* Декоративная линия */
+        .divider {
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            margin: 3rem auto;
+        }
+        
+        /* Футер для 404 */
+        .lost-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .lost-footer p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .error-code {
+                gap: 1rem;
+            }
+            
+            .code-digit {
+                font-size: 5rem;
+            }
+            
+            .code-separator {
+                font-size: 2.5rem;
+            }
+            
+            .lost-title {
+                font-size: 2.5rem;
+            }
+            
+            .path-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .quick-links {
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .code-digit {
+                font-size: 4rem;
+            }
+            
+            .lost-title {
+                font-size: 2rem;
+            }
+            
+            .lost-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Фон -->
+    <div class="lost-bg"></div>
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+    <div class="data-grid"></div>
+    
+    <!-- Хедер -->
+    <header class="temple-header" style="position: absolute; top: 0;">
+        <div class="header-container">
+            <a href="index.html" class="temple-seal" aria-label="Вернуться домой">
+                <div class="seal-symbol">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.8"/>
+                        <path d="M24 10V38M10 24H38" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.4"/>
+                        <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="0.6" stroke-opacity="0.5"/>
+                        <circle cx="24" cy="24" r="3" fill="currentColor" fill-opacity="0.3"/>
+                        <path d="M18 18L30 30M18 30L30 18" stroke="currentColor" stroke-width="0.4" stroke-opacity="0.4"/>
+                    </svg>
+                </div>
+                <div class="seal-text">
+                    <span class="seal-kanji" style="color: rgba(255, 141, 161, 0.8);">心寺</span>
+                    <span class="seal-subtitle" style="color: rgba(255, 255, 255, 0.7);">JUGARIC IT</span>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="temple-main">
+        <section class="lost-path-section">
+            <div class="lost-content">
+                <!-- Код ошибки -->
+                <div class="error-code">
+                    <span class="code-digit" data-digit="4">4</span>
+                    <span class="code-separator">∅</span>
+                    <span class="code-digit" data-digit="0">0</span>
+                    <span class="code-separator">∅</span>
+                    <span class="code-digit" data-digit="4">4</span>
+                </div>
+                
+                <!-- Заголовок -->
+                <h1 class="lost-title">
+                    <span class="title-line">
+                        <span class="title-char" data-char="З">З</span>
+                        <span class="title-char" data-char="А">А</span>
+                        <span class="title-char" data-char="Б">Б</span>
+                        <span class="title-char" data-char="Л">Л</span>
+                        <span class="title-char" data-char="У">У</span>
+                        <span class="title-char" data-char="Д">Д</span>
+                        <span class="title-char" data-char="Ш">Ш</span>
+                        <span class="title-char" data-char="И">И</span>
+                        <span class="title-char" data-char="Й">Й</span>
+                    </span>
+                    <span class="title-line">
+                        <span class="title-char" data-char="П">П</span>
+                        <span class="title-char" data-char="У">У</span>
+                        <span class="title-char" data-char="Т">Т</span>
+                        <span class="title-char" data-char="Н">Н</span>
+                        <span class="title-char" data-char="И">И</span>
+                        <span class="title-char" data-char="К">К</span>
+                    </span>
+                </h1>
+                
+                <!-- Подзаголовок -->
+                <div class="lost-subtitle">
+                    <p>Страница, которую вы ищете, растворилась в цифровой пустоте.<br>
+                    Но каждая ошибка — это возможность для нового творчества.</p>
+                </div>
+                
+                <!-- Декоративная линия -->
+                <div class="divider"></div>
+                
+                <!-- Карточки путей -->
+                <div class="path-cards">
+                    <a href="index.html" class="path-card">
+                        <div class="card-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3 class="card-title">Вернуться в храм</h3>
+                        <p class="card-description">
+                            На главную страницу студии, где живут творчество и вдохновение
+                        </p>
+                        <div class="card-ornament">家</div>
+                    </a>
+                    
+                    <a href="cases.html" class="path-card">
+                        <div class="card-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="card-title">Исследовать проекты</h3>
+                        <p class="card-description">
+                            Погрузиться в наши творческие работы и найти вдохновение
+                        </p>
+                        <div class="card-ornament">庭</div>
+                    </a>
+                    
+                    <a href="contact.html" class="path-card">
+                        <div class="card-icon">
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                        <h3 class="card-title">Позвать проводника</h3>
+                        <p class="card-description">
+                            Связаться с нами, чтобы обсудить ваш проект или задать вопросы
+                        </p>
+                        <div class="card-ornament">茶</div>
+                    </a>
+                </div>
+                
+                <!-- Быстрые ссылки -->
+                <div class="quick-links">
+                    <a href="index.html#philosophy" class="quick-link">
+                        <i class="fas fa-feather-alt"></i>
+                        <span>Философия</span>
+                    </a>
+                    <a href="index.html#paths" class="quick-link">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Сферы мастерства</span>
+                    </a>
+                    <a href="index.html#pulse" class="quick-link">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Пульс студии</span>
+                    </a>
+                </div>
+                
+                <!-- Футер -->
+                <div class="lost-footer">
+                    <p>© 2024 Jugaric IT · Заблудиться с изяществом — это искусство</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Анимация цифр
+            setTimeout(function() {
+                var digits = document.querySelectorAll('.code-digit');
+                digits.forEach(function(digit, index) {
+                    setTimeout(function() {
+                        digit.classList.add('awake');
+                    }, 300 * index);
+                });
+            }, 300);
+            
+            // Анимация букв заголовка
+            setTimeout(function() {
+                var chars = document.querySelectorAll('.title-char');
+                chars.forEach(function(char, index) {
+                    setTimeout(function() {
+                        char.classList.add('awake');
+                    }, 50 * index);
+                });
+            }, 800);
+            
+            // Эффекты при наведении на карточки
+            var cards = document.querySelectorAll('.path-card');
+            cards.forEach(function(card) {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Плавный скролл для якорных ссылок
+            var anchorLinks = document.querySelectorAll('a[href^="#"]');
+            anchorLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    var targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

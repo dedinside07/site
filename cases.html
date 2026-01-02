@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugaric IT / Мы спиздим все ваши деньги</title>
+    <link rel="stylesheet" href="cases_styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        /* Анимации для элементов страницы проектов */
+        @keyframes canvasPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.02); }
+        }
+        
+        @keyframes ideaFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(5deg); }
+            66% { transform: translateY(5px) rotate(-3deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Деликатный фон -->
+    <div class="digital-gradient-bg" aria-hidden="true">
+        <div class="gradient-flow flow-1"></div>
+        <div class="gradient-flow flow-2"></div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="projects-temple" id="projectsTemple">
+        <!-- Шапка сайта -->
+        <header class="temple-header" id="mainHeader">
+            <div class="header-container">
+                <!-- Логотип -->
+                <a href="homepage.html" class="temple-seal" aria-label="Вернуться на главную">
+                    <div class="seal-symbol">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="var(--ink-deep)" stroke-width="0.8" stroke-opacity="0.8"/>
+                            <path d="M24 10V38M10 24H38" stroke="var(--magic-blush)" stroke-width="0.8" stroke-opacity="0.4"/>
+                            <circle cx="24" cy="24" r="8" stroke="var(--magic-lavender)" stroke-width="0.6" stroke-opacity="0.5"/>
+                            <circle cx="24" cy="24" r="3" fill="var(--magic-blush)" fill-opacity="0.3"/>
+                            <path d="M18 18L30 30M18 30L30 18" stroke="var(--magic-mint)" stroke-width="0.4" stroke-opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <div class="seal-text">
+                        <span class="seal-kanji">庭</span>
+                        <span class="seal-subtitle">JUGARIC IT</span>
+                    </div>
+                </a>
+
+                <!-- Навигация -->
+                <nav class="temple-nav" aria-label="Навигация">
+                    <div class="digital-nav">
+                        <a href="homepage.html" class="nav-item">
+                            <span class="nav-tech">⊹</span>
+                            <span class="nav-label">ГЛАВНАЯ</span>
+                            <span class="nav-kanji">家</span>
+                        </a>
+                        <a href="approaches.html" class="nav-item">
+                            <span class="nav-tech">⎔</span>
+                            <span class="nav-label">ПОДХОДЫ</span>
+                            <span class="nav-kanji">道</span>
+                        </a>
+                        <a href="cases.html" class="nav-item active" aria-current="page">
+                            <span class="nav-tech">⟁</span>
+                            <span class="nav-label">ПРОЕКТЫ</span>
+                            <span class="nav-kanji">庭</span>
+                        </a>
+                        <a href="contact.html" class="nav-item">
+                            <span class="nav-tech">⚙</span>
+                            <span class="nav-label">КОНТАКТЫ</span>
+                            <span class="nav-kanji">茶</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <!-- Кнопка вдохновения -->
+                <button class="magic-call" aria-label="Активировать вдохновение">
+                    <span class="call-aura"></span>
+                    <span class="call-text">ВДОХНОВЕНИЕ</span>
+                    <i data-feather="sparkles" class="call-icon" aria-hidden="true"></i>
+                </button>
+
+                <!-- Мобильное меню -->
+                <button class="mobile-menu-toggle" id="menuToggle" aria-label="Открыть меню">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
+            </div>
+            
+            <!-- Индикатор секции -->
+            <div class="section-tracker">
+                <div class="tracker-dot" style="--color: var(--magic-blush);"></div>
+                <div class="tracker-dot" style="--color: var(--magic-lavender);"></div>
+                <div class="tracker-dot active" style="--color: var(--magic-mint);"></div>
+                <div class="tracker-dot" style="--color: var(--magic-peach);"></div>
+            </div>
+        </header>
+
+        <main class="projects-main">
+            <!-- Hero Section -->
+            <section id="projects-hero" class="projects-hero" aria-labelledby="hero-title">
+                <div class="hero-container">
+                    <!-- Контент -->
+                    <div class="hero-content">
+                        <div class="hero-gate">
+                            <h1 id="hero-title" class="hero-title">
+                                <span class="title-line">
+                                    <span class="title-char" data-char="Г">Г</span>
+                                    <span class="title-char" data-char="А">А</span>
+                                    <span class="title-char" data-char="Л">Л</span>
+                                    <span class="title-char" data-char="Е">Е</span>
+                                    <span class="title-char" data-char="Р">Р</span>
+                                    <span class="title-char" data-char="Е">Е</span>
+                                    <span class="title-char" data-char="Я">Я</span>
+                                </span>
+                                <span class="title-line">
+                                    <span class="title-char" data-char="Б">Б</span>
+                                    <span class="title-char" data-char="У">У</span>
+                                    <span class="title-char" data-char="Д">Д</span>
+                                    <span class="title-char" data-char="У">У</span>
+                                    <span class="title-char" data-char="Щ">Щ</span>
+                                    <span class="title-char" data-char="И">И</span>
+                                    <span class="title-char" data-char="Х">Х</span>
+                                </span>
+                                <span class="title-line">
+                                    <span class="title-char" data-char="П">П</span>
+                                    <span class="title-char" data-char="Р">Р</span>
+                                    <span class="title-char" data-char="О">О</span>
+                                    <span class="title-char" data-char="И">И</span>
+                                    <span class="title-char" data-char="З">З</span>
+                                    <span class="title-char" data-char="В">В</span>
+                                    <span class="title-char" data-char="Е">Е</span>
+                                    <span class="title-char" data-char="Д">Д</span>
+                                    <span class="title-char" data-char="Е">Е</span>
+                                    <span class="title-char" data-char="Н">Н</span>
+                                    <span class="title-char" data-char="И">И</span>
+                                    <span class="title-char" data-char="Й">Й</span>
+                                </span>
+                            </h1>
+                            <div class="hero-subtitle">
+                                <span class="subtitle-text">
+                                    Каждая большая история начинается с пустого холста. 
+                                    Приглашаем вас заполнить его вместе с нами.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Цифровой холст -->
+                    <div class="digital-canvas">
+                        <div class="canvas-container">
+                            <!-- Пульсирующий центр холста -->
+                            <div class="canvas-core">
+                                <div class="core-aura"></div>
+                                <div class="core-sparkles">
+                                    <div class="sparkle s1"></div>
+                                    <div class="sparkle s2"></div>
+                                    <div class="sparkle s3"></div>
+                                    <div class="sparkle s4"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Формирующиеся идеи вокруг холста -->
+                            <div class="forming-ideas">
+                                <div class="idea idea-1" style="--color: var(--magic-blush);">
+                                    <div class="idea-glow"></div>
+                                    <div class="idea-pulse"></div>
+                                </div>
+                                <div class="idea idea-2" style="--color: var(--magic-lavender);">
+                                    <div class="idea-glow"></div>
+                                    <div class="idea-pulse"></div>
+                                </div>
+                                <div class="idea idea-3" style="--color: var(--magic-mint);">
+                                    <div class="idea-glow"></div>
+                                    <div class="idea-pulse"></div>
+                                </div>
+                                <div class="idea idea-4" style="--color: var(--magic-peach);">
+                                    <div class="idea-glow"></div>
+                                    <div class="idea-pulse"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Соединительные линии -->
+                            <div class="idea-connections">
+                                <div class="connection c1"></div>
+                                <div class="connection c2"></div>
+                                <div class="connection c3"></div>
+                                <div class="connection c4"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Деликатная аура -->
+                    <div class="hero-aura" aria-hidden="true">
+                        <div class="aura-circle circle-1"></div>
+                        <div class="aura-circle circle-2"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция будущего портфолио -->
+            <section id="portfolio" class="portfolio-section" aria-labelledby="portfolio-title">
+                <div class="portfolio-container">
+                    <header class="portfolio-header">
+                        <div class="portfolio-marker">
+                            <span class="marker-text">創</span>
+                        </div>
+                        <h2 id="portfolio-title" class="portfolio-title">
+                            Наш Холст Ждёт Вашей Истории
+                        </h2>
+                        <p class="portfolio-subtitle">
+                            Как утонченная креативная студия, мы верим в индивидуальность каждого проекта. 
+                            Эта страница — ваш пустой холст, ожидающий воплощения смелых идей в реальность. 
+                            Мы создаем цифровые произведения искусства, которые по-настоящему отражают 
+                            уникальность наших партнеров.
+                        </p>
+                    </header>
+
+                    <!-- Абстрактный паттерн -->
+                    <div class="creative-pattern" aria-hidden="true">
+                        <div class="pattern-line line-1"></div>
+                        <div class="pattern-line line-2"></div>
+                        <div class="pattern-line line-3"></div>
+                        <div class="pattern-dot dot-1"></div>
+                        <div class="pattern-dot dot-2"></div>
+                        <div class="pattern-dot dot-3"></div>
+                    </div>
+
+                    <!-- Карточки будущих проектов -->
+                    <div class="future-projects">
+                        <!-- Карточка 1: Ваш проект здесь -->
+                        <article class="project-card project-1" tabindex="0">
+                            <div class="card-canvas">
+                                <!-- Деликатный фон карточки -->
+                                <div class="card-bg-pattern" aria-hidden="true">
+                                    <div class="bg-line l1"></div>
+                                    <div class="bg-line l2"></div>
+                                    <div class="bg-line l3"></div>
+                                </div>
+                                
+                                <!-- Контент карточки -->
+                                <div class="card-content">
+                                    <div class="card-status">
+                                        <span class="status-indicator"></span>
+                                        <span class="status-text">Ожидает воплощения</span>
+                                    </div>
+                                    
+                                    <div class="card-header">
+                                        <div class="card-number">01</div>
+                                        <div class="card-icon">
+                                            <i data-feather="star" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <h3 class="card-title">Ваш Проект Здесь</h3>
+                                    
+                                    <div class="card-description">
+                                        <p>
+                                            Это место для вашего уникального видения. 
+                                            Здесь появится цифровое произведение, 
+                                            созданное специально для вас.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="card-potential">
+                                        <div class="potential-meter">
+                                            <div class="meter-label">ПОТЕНЦИАЛ</div>
+                                            <div class="meter-visual">
+                                                <div class="meter-fill"></div>
+                                            </div>
+                                            <div class="meter-value">∞</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-tags">
+                                        <span class="tag">Уникальный</span>
+                                        <span class="tag">Вдохновляющий</span>
+                                        <span class="tag">Ваш</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Свечение карточки -->
+                                <div class="card-glow" aria-hidden="true"></div>
+                            </div>
+                        </article>
+
+                        <!-- Карточка 2: Будущий шедевр -->
+                        <article class="project-card project-2" tabindex="0">
+                            <div class="card-canvas">
+                                <div class="card-bg-pattern" aria-hidden="true">
+                                    <div class="bg-line l1"></div>
+                                    <div class="bg-line l2"></div>
+                                    <div class="bg-line l3"></div>
+                                </div>
+                                
+                                <div class="card-content">
+                                    <div class="card-status">
+                                        <span class="status-indicator"></span>
+                                        <span class="status-text">На этапе идеи</span>
+                                    </div>
+                                    
+                                    <div class="card-header">
+                                        <div class="card-number">02</div>
+                                        <div class="card-icon">
+                                            <i data-feather="diamond" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <h3 class="card-title">Будущий Шедевр</h3>
+                                    
+                                    <div class="card-description">
+                                        <p>
+                                            Шедевр начинается с мечты и диалога. 
+                                            Мы превратим вашу идею в цифровое искусство, 
+                                            достойное выставки.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="card-potential">
+                                        <div class="potential-meter">
+                                            <div class="meter-label">ИННОВАЦИИ</div>
+                                            <div class="meter-visual">
+                                                <div class="meter-fill"></div>
+                                            </div>
+                                            <div class="meter-value">100%</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-tags">
+                                        <span class="tag">Исключительный</span>
+                                        <span class="tag">Элегантный</span>
+                                        <span class="tag">Передовой</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-glow" aria-hidden="true"></div>
+                            </div>
+                        </article>
+
+                        <!-- Карточка 3: Идея в воплощении -->
+                        <article class="project-card project-3" tabindex="0">
+                            <div class="card-canvas">
+                                <div class="card-bg-pattern" aria-hidden="true">
+                                    <div class="bg-line l1"></div>
+                                    <div class="bg-line l2"></div>
+                                    <div class="bg-line l3"></div>
+                                </div>
+                                
+                                <div class="card-content">
+                                    <div class="card-status">
+                                        <span class="status-indicator"></span>
+                                        <span class="status-text">В процессе создания</span>
+                                    </div>
+                                    
+                                    <div class="card-header">
+                                        <div class="card-number">03</div>
+                                        <div class="card-icon">
+                                            <i data-feather="zap" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <h3 class="card-title">Идея в Воплощении</h3>
+                                    
+                                    <div class="card-description">
+                                        <p>
+                                            От замысла до реализации. Мы сопровождаем 
+                                            каждую идею, превращая её в законченное 
+                                            цифровое произведение искусства.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="card-potential">
+                                        <div class="potential-meter">
+                                            <div class="meter-label">ЭНЕРГИЯ</div>
+                                            <div class="meter-visual">
+                                                <div class="meter-fill"></div>
+                                            </div>
+                                            <div class="meter-value">87%</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-tags">
+                                        <span class="tag">Динамичный</span>
+                                        <span class="tag">Современный</span>
+                                        <span class="tag">Живой</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-glow" aria-hidden="true"></div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция вдохновения студии -->
+            <section id="inspiration" class="inspiration-section" aria-labelledby="inspiration-title">
+                <div class="inspiration-container">
+                    <header class="inspiration-header">
+                        <h2 id="inspiration-title" class="inspiration-title">
+                            Наши Исследования
+                        </h2>
+                        <p class="inspiration-subtitle">
+                            Идеи, которые нас вдохновляют и демонстрируют наш подход к творчеству
+                        </p>
+                    </header>
+
+                    <div class="inspiration-grid">
+                        <!-- Концепт 1 -->
+                        <article class="concept-card" tabindex="0">
+                            <div class="concept-visual">
+                                <div class="visual-sketch sketch-1"></div>
+                                <div class="visual-overlay">
+                                    <div class="overlay-text">Концепт</div>
+                                </div>
+                            </div>
+                            <div class="concept-content">
+                                <h3 class="concept-name">Эмоциональный AI</h3>
+                                <p class="concept-description">
+                                    Исследование интерфейсов, которые понимают 
+                                    эмоции пользователя и адаптируются к ним.
+                                </p>
+                                <div class="concept-tags">
+                                    <span class="concept-tag">AI</span>
+                                    <span class="concept-tag">Эмпатия</span>
+                                    <span class="concept-tag">UX</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Концепт 2 -->
+                        <article class="concept-card" tabindex="0">
+                            <div class="concept-visual">
+                                <div class="visual-sketch sketch-2"></div>
+                                <div class="visual-overlay">
+                                    <div class="overlay-text">Эксперимент</div>
+                                </div>
+                            </div>
+                            <div class="concept-content">
+                                <h3 class="concept-name">Кинетическая Типографика</h3>
+                                <p class="concept-description">
+                                    Текст, который дышит и движется в ритме с контентом, 
+                                    создавая эмоциональную связь.
+                                </p>
+                                <div class="concept-tags">
+                                    <span class="concept-tag">Анимация</span>
+                                    <span class="concept-tag">Типографика</span>
+                                    <span class="concept-tag">Динамика</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Концепт 3 -->
+                        <article class="concept-card" tabindex="0">
+                            <div class="concept-visual">
+                                <div class="visual-sketch sketch-3"></div>
+                                <div class="visual-overlay">
+                                    <div class="overlay-text">Прототип</div>
+                                </div>
+                            </div>
+                            <div class="concept-content">
+                                <h3 class="concept-name">Цифровая Экосистема</h3>
+                                <p class="concept-description">
+                                    Архитектура, где каждый компонент живёт своей жизнью, 
+                                    но гармонично существует с целым.
+                                </p>
+                                <div class="concept-tags">
+                                    <span class="concept-tag">Архитектура</span>
+                                    <span class="concept-tag">Гармония</span>
+                                    <span class="concept-tag">Система</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA секция -->
+            <section id="projects-cta" class="projects-cta" aria-labelledby="cta-title">
+                <div class="cta-container">
+                    <div class="cta-content">
+                        <h2 id="cta-title" class="cta-title">Начните Свою Цифровую Историю с Нами</h2>
+                        <p class="cta-subtitle">
+                            Мы ищем партнеров, готовых воплощать свои уникальные идеи 
+                            в цифровые произведения искусства. Давайте вместе создадим то, 
+                            чем вы будете гордиться.
+                        </p>
+                        
+                        <div class="cta-actions">
+                            <a href="contact.html" class="cta-button primary-cta">
+                                <span class="btn-aura"></span>
+                                <span class="btn-text">ОБСУДИТЬ СВОЮ ИДЕЮ</span>
+                                <i data-feather="arrow-right" class="btn-icon" aria-hidden="true"></i>
+                            </a>
+                            
+                            <a href="approaches.html" class="cta-button secondary-cta">
+                                <span class="btn-glow"></span>
+                                <span class="btn-text">УЗНАТЬ О ПОДХОДЕ</span>
+                                <i data-feather="compass" class="btn-icon" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Декор CTA -->
+                    <div class="cta-decoration" aria-hidden="true">
+                        <div class="floating-element e1"></div>
+                        <div class="floating-element e2"></div>
+                        <div class="floating-element e3"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Подвал сайта -->
+        <footer class="temple-foundation" aria-label="Основание студии">
+            <div class="foundation-container">
+                <div class="foundation-content">
+                    <div class="foundation-seal" aria-hidden="true">
+                        <div class="final-seal">作</div>
+                    </div>
+                    <div class="foundation-text">
+                        <p class="foundation-line">Jugaric IT — пространство возможностей</p>
+                        <p class="foundation-line">где каждая идея находит своё воплощение</p>
+                        <p class="foundation-line">в форме цифрового искусства</p>
+                    </div>
+                </div>
+
+                <div class="foundation-links" aria-label="Дополнительные разделы">
+                    <a href="#projects-hero" class="foundation-link">Галерея Будущего</a>
+                    <a href="#portfolio" class="foundation-link">Ваш Холст</a>
+                    <a href="#inspiration" class="foundation-link">Наши Исследования</a>
+                </div>
+
+                <div class="foundation-energy" aria-hidden="true">
+                    <div class="energy-flow">
+                        <div class="flow-dot dot-1"></div>
+                        <div class="flow-dot dot-2"></div>
+                        <div class="flow-dot dot-3"></div>
+                    </div>
+                    <span class="energy-text">ТВОРЧЕСКАЯ ЭНЕРГИЯ</span>
+                </div>
+            </div>
+
+            <div class="foundation-base">
+                <div class="base-ink-flow"></div>
+                <div class="base-copyright">
+                    © 2024 Jugaric IT. Пространство для будущих шедевров.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Скрипты -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Инициализация иконок
+            feather.replace();
+            
+            // Инициализация страницы проектов
+            const projectsPage = new ProjectsPage();
+            projectsPage.init();
+            
+            // Мобильное меню
+            const menuToggle = document.getElementById('menuToggle');
+            const templeNav = document.querySelector('.temple-nav');
+            
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                menuToggle.classList.toggle('active');
+                templeNav.classList.toggle('active');
+            });
+            
+            // Плавная навигация
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Анимация заголовка
+            setTimeout(() => {
+                const letters = document.querySelectorAll('.title-char');
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.style.opacity = '1';
+                        letter.style.transform = 'translateY(0)';
+                    }, index * 60);
+                });
+            }, 500);
+            
+            // Интерактивность для идей на холсте
+            const ideas = document.querySelectorAll('.idea');
+            ideas.forEach((idea, index) => {
+                idea.addEventListener('mouseenter', () => {
+                    const colors = ['Розовый', 'Лавандовый', 'Мятный', 'Персиковый'];
+                    idea.style.transform = 'scale(1.2)';
+                    
+                    // Подсвечиваем соответствующее соединение
+                    const connection = document.querySelector(`.c${index + 1}`);
+                    if (connection) {
+                        connection.style.opacity = '0.8';
+                    }
+                });
+                
+                idea.addEventListener('mouseleave', () => {
+                    idea.style.transform = '';
+                    const connection = document.querySelector(`.c${index + 1}`);
+                    if (connection) {
+                        connection.style.opacity = '0.3';
+                    }
+                });
+                
+                idea.addEventListener('click', () => {
+                    // Эффект пульсации при клике
+                    idea.style.animation = 'ideaClickEffect 0.6s ease';
+                    setTimeout(() => {
+                        idea.style.animation = '';
+                    }, 600);
+                    
+                    // Прокручиваем к карточкам проектов
+                    document.querySelector('#portfolio').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                });
+            });
+            
+            // Интерактивность карточек проектов
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('card-hover');
+                    const glow = card.querySelector('.card-glow');
+                    if (glow) {
+                        glow.style.opacity = '0.4';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('card-hover');
+                    const glow = card.querySelector('.card-glow');
+                    if (glow) {
+                        glow.style.opacity = '0.2';
+                    }
+                });
+                
+                card.addEventListener('click', () => {
+                    // Показываем модальное окно с призывом к действию
+                    const title = card.querySelector('.card-title').textContent;
+                    projectsPage.showProjectInvitation(title);
+                });
+            });
+            
+            // Интерактивность концептов
+            const conceptCards = document.querySelectorAll('.concept-card');
+            conceptCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px)';
+                    const overlay = card.querySelector('.visual-overlay');
+                    if (overlay) {
+                        overlay.style.opacity = '0.9';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    const overlay = card.querySelector('.visual-overlay');
+                    if (overlay) {
+                        overlay.style.opacity = '0.7';
+                    }
+                });
+            });
+        });
+
+        // Класс страницы проектов
+        class ProjectsPage {
+            constructor() {
+                this.canvasAnimations = null;
+            }
+            
+            init() {
+                this.setupCanvasAnimation();
+                this.setupScrollAnimations();
+                this.setupCTAEffects();
+                this.createFloatingElements();
+            }
+            
+            setupCanvasAnimation() {
+                // Анимация блесток на холсте
+                const sparkles = document.querySelectorAll('.sparkle');
+                sparkles.forEach((sparkle, index) => {
+                    const delay = index * 0.5;
+                    const duration = 3 + Math.random() * 2;
+                    
+                    sparkle.style.animation = `sparkleTwinkle ${duration}s infinite ease-in-out ${delay}s`;
+                });
+                
+                // Анимация пульсации идей
+                const ideas = document.querySelectorAll('.idea-pulse');
+                ideas.forEach((pulse, index) => {
+                    const delay = index * 0.8;
+                    pulse.style.animation = `ideaPulse ${2 + index * 0.5}s infinite ease-in-out ${delay}s`;
+                });
+            }
+            
+            setupScrollAnimations() {
+                // Анимация появления элементов при скролле
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            
+                            // Анимация для карточек проектов
+                            if (entry.target.classList.contains('project-card')) {
+                                const delay = Array.from(
+                                    document.querySelectorAll('.project-card')
+                                ).indexOf(entry.target) * 200;
+                                
+                                setTimeout(() => {
+                                    entry.target.style.opacity = '1';
+                                    entry.target.style.transform = 'translateY(0)';
+                                }, delay);
+                            }
+                            
+                            // Анимация для концептов
+                            if (entry.target.classList.contains('concept-card')) {
+                                const delay = Array.from(
+                                    document.querySelectorAll('.concept-card')
+                                ).indexOf(entry.target) * 150;
+                                
+                                setTimeout(() => {
+                                    entry.target.style.opacity = '1';
+                                    entry.target.style.transform = 'translateY(0)';
+                                }, delay);
+                            }
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                // Наблюдаем за элементами
+                document.querySelectorAll('.project-card, .concept-card').forEach(el => {
+                    observer.observe(el);
+                });
+                
+                // Анимация паттерна
+                const pattern = document.querySelector('.creative-pattern');
+                if (pattern) {
+                    window.addEventListener('scroll', () => {
+                        const rect = pattern.getBoundingClientRect();
+                        const windowHeight = window.innerHeight;
+                        
+                        if (rect.top < windowHeight && rect.bottom > 0) {
+                            const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+                            pattern.style.opacity = `${0.3 + progress * 0.7}`;
+                        }
+                    });
+                }
+            }
+            
+            setupCTAEffects() {
+                // Анимация переходной линии в CTA
+                const transitionLine = document.querySelector('.transition-line');
+                if (transitionLine) {
+                    setInterval(() => {
+                        transitionLine.style.width = '100%';
+                        setTimeout(() => {
+                            transitionLine.style.width = '0%';
+                        }, 1000);
+                    }, 3000);
+                }
+            }
+            
+            createFloatingElements() {
+                // Создаём плавающие элементы в CTA
+                const ctaSection = document.querySelector('.projects-cta');
+                if (!ctaSection) return;
+                
+                const decoration = ctaSection.querySelector('.cta-decoration');
+                if (!decoration) return;
+                
+                // Создаём дополнительные элементы
+                for (let i = 4; i <= 6; i++) {
+                    const element = document.createElement('div');
+                    element.className = `floating-element e${i}`;
+                    
+                    const size = 20 + Math.random() * 30;
+                    const duration = 10 + Math.random() * 8;
+                    const delay = Math.random() * 5;
+                    const isCircle = Math.random() > 0.5;
+                    
+                    const colors = [
+                        'rgba(255, 141, 161, 0.05)',
+                        'rgba(184, 161, 255, 0.04)',
+                        'rgba(138, 255, 209, 0.04)',
+                        'rgba(255, 200, 161, 0.04)'
+                    ];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    element.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        background: ${color};
+                        border-radius: ${isCircle ? '50%' : '4px'};
+                        filter: blur(1px);
+                        animation: floatElement ${duration}s infinite ease-in-out ${delay}s;
+                        z-index: 1;
+                    `;
+                    
+                    // Позиционируем
+                    element.style.left = `${Math.random() * 90}%`;
+                    element.style.top = `${Math.random() * 80}%`;
+                    
+                    decoration.appendChild(element);
+                }
+            }
+            
+            showProjectInvitation(projectTitle) {
+                // Создаём модальное окно при клике на карточку проекта
+                const modal = document.createElement('div');
+                modal.className = 'project-invitation-modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>${projectTitle}</h3>
+                            <button class="modal-close" aria-label="Закрыть">
+                                <i data-feather="x"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Это место ждёт вашего проекта. Давайте создадим что-то невероятное вместе!</p>
+                        </div>
+                        <div class="modal-actions">
+                            <a href="contact.html" class="modal-button">Обсудить проект</a>
+                            <button class="modal-button secondary">Позже</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Инициализируем иконку закрытия
+                setTimeout(() => {
+                    feather.replace();
+                    
+                    const closeBtn = modal.querySelector('.modal-close');
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', () => {
+                            modal.remove();
+                        });
+                    }
+                    
+                    const laterBtn = modal.querySelector('.modal-button.secondary');
+                    if (laterBtn) {
+                        laterBtn.addEventListener('click', () => {
+                            modal.remove();
+                        });
+                    }
+                    
+                    // Закрытие по клику вне модального окна
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.remove();
+                        }
+                    });
+                }, 100);
+            }
+        }
+
+        // Добавляем CSS анимации
+        const style = document.createElement('style');
+        style.textContent = `
+            /* Анимация блесток */
+            @keyframes sparkleTwinkle {
+                0%, 100% { 
+                    opacity: 0.2;
+                    transform: scale(1);
+                }
+                50% { 
+                    opacity: 0.8;
+                    transform: scale(1.2);
+                }
+            }
+            
+            /* Анимация пульсации идей */
+            @keyframes ideaPulse {
+                0%, 100% { 
+                    opacity: 0.3;
+                    transform: scale(1);
+                }
+                50% { 
+                    opacity: 0.6;
+                    transform: scale(1.1);
+                }
+            }
+            
+            /* Анимация эффекта клика по идее */
+            @keyframes ideaClickEffect {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.3); }
+                100% { transform: scale(1); }
+            }
+            
+            /* Анимация плавающих элементов */
+            @keyframes floatElement {
+                0%, 100% { 
+                    transform: translateY(0) translateX(0) rotate(0deg);
+                }
+                33% { 
+                    transform: translateY(-15px) translateX(10px) rotate(120deg);
+                }
+                66% { 
+                    transform: translateY(10px) translateX(-5px) rotate(240deg);
+                }
+            }
+            
+            /* Начальные стили для анимации появления */
+            .project-card {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+            
+            .concept-card {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.4s ease, transform 0.4s ease;
+            }
+            
+            /* Стили для модального окна */
+            .project-invitation-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(10px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+                animation: modalFadeIn 0.3s ease;
+            }
+            
+            .modal-content {
+                background: white;
+                border-radius: 20px;
+                padding: 2rem;
+                max-width: 500px;
+                width: 90%;
+                animation: modalSlideUp 0.3s ease;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            }
+            
+            @keyframes modalFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            
+            @keyframes modalSlideUp {
+                from { 
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to { 
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

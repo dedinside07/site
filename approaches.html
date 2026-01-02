@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugaric IT / Мы спиздим все ваши деньги</title>
+    <link rel="stylesheet" href="approaches_styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        /* Анимации для бусин */
+        @keyframes beadClickPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes titleReveal {
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Деликатный фон -->
+    <div class="digital-gradient-bg" aria-hidden="true">
+        <div class="gradient-flow flow-1"></div>
+        <div class="gradient-flow flow-2"></div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="approaches-temple" id="approachesTemple">
+        <!-- Шапка сайта -->
+        <header class="temple-header" id="mainHeader">
+            <div class="header-container">
+                <!-- Логотип -->
+                <a href="homepage.html" class="temple-seal" aria-label="Вернуться на главную">
+                    <div class="seal-symbol">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="var(--ink-deep)" stroke-width="0.8" stroke-opacity="0.8"/>
+                            <path d="M24 10V38M10 24H38" stroke="var(--magic-blush)" stroke-width="0.8" stroke-opacity="0.4"/>
+                            <circle cx="24" cy="24" r="8" stroke="var(--magic-lavender)" stroke-width="0.6" stroke-opacity="0.5"/>
+                            <circle cx="24" cy="24" r="3" fill="var(--magic-blush)" fill-opacity="0.3"/>
+                            <path d="M18 18L30 30M18 30L30 18" stroke="var(--magic-mint)" stroke-width="0.4" stroke-opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <div class="seal-text">
+                        <span class="seal-kanji">道</span>
+                        <span class="seal-subtitle">JUGARIC IT</span>
+                    </div>
+                </a>
+
+                <!-- Навигация -->
+                <nav class="temple-nav" aria-label="Навигация">
+                    <div class="digital-nav">
+                        <a href="homepage.html" class="nav-item">
+                            <span class="nav-tech">⊹</span>
+                            <span class="nav-label">ГЛАВНАЯ</span>
+                            <span class="nav-kanji">家</span>
+                        </a>
+                        <a href="approaches.html" class="nav-item active" aria-current="page">
+                            <span class="nav-tech">⎔</span>
+                            <span class="nav-label">ПОДХОДЫ</span>
+                            <span class="nav-kanji">道</span>
+                        </a>
+                        <a href="cases.html" class="nav-item">
+                            <span class="nav-tech">⟁</span>
+                            <span class="nav-label">ПРОЕКТЫ</span>
+                            <span class="nav-kanji">庭</span>
+                        </a>
+                        <a href="contact.html" class="nav-item">
+                            <span class="nav-tech">⚙</span>
+                            <span class="nav-label">КОНТАКТЫ</span>
+                            <span class="nav-kanji">茶</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <!-- Кнопка вдохновения -->
+                <button class="magic-call" aria-label="Активировать вдохновение">
+                    <span class="call-aura"></span>
+                    <span class="call-text">ВДОХНОВЕНИЕ</span>
+                    <i data-feather="sparkles" class="call-icon" aria-hidden="true"></i>
+                </button>
+
+                <!-- Мобильное меню -->
+                <button class="mobile-menu-toggle" id="menuToggle" aria-label="Открыть меню">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
+            </div>
+            
+            <!-- Индикатор секции -->
+            <div class="section-tracker">
+                <div class="tracker-dot" style="--color: var(--magic-blush);"></div>
+                <div class="tracker-dot active" style="--color: var(--magic-lavender);"></div>
+                <div class="tracker-dot" style="--color: var(--magic-mint);"></div>
+                <div class="tracker-dot" style="--color: var(--magic-peach);"></div>
+            </div>
+        </header>
+
+        <main class="approaches-main">
+            <!-- Hero Section -->
+            <section id="approach-hero" class="approach-hero" aria-labelledby="hero-title">
+                <div class="hero-container">
+                    <!-- Контент -->
+                    <div class="hero-content">
+                        <div class="hero-gate">
+                            <h1 id="hero-title" class="hero-title">
+                                <span class="title-line">
+                                    <span class="title-char" data-char="П">П</span>
+                                    <span class="title-char" data-char="У">У</span>
+                                    <span class="title-char" data-char="Т">Т</span>
+                                    <span class="title-char" data-char="Ь">Ь</span>
+                                </span>
+                                <span class="title-line">
+                                    <span class="title-char" data-char="Т">Т</span>
+                                    <span class="title-char" data-char="В">В</span>
+                                    <span class="title-char" data-char="О">О</span>
+                                    <span class="title-char" data-char="Р">Р</span>
+                                    <span class="title-char" data-char="Ч">Ч</span>
+                                    <span class="title-char" data-char="Е">Е</span>
+                                    <span class="title-char" data-char="С">С</span>
+                                    <span class="title-char" data-char="Т">Т</span>
+                                    <span class="title-char" data-char="В">В</span>
+                                    <span class="title-char" data-char="А">А</span>
+                                </span>
+                            </h1>
+                            <div class="hero-subtitle">
+                                <span class="subtitle-text">
+                                    От первой искры идеи до цифрового произведения искусства — 
+                                    каждый шаг наполнен смыслом и вниманием.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Бусины -->
+                    <div class="hero-beads">
+                        <div class="beads-container">
+                            <!-- Бусина 1 -->
+                            <div class="bead bead-1" style="--color: var(--magic-blush);">
+                                <div class="bead-core">
+                                    <div class="bead-inner-glow"></div>
+                                </div>
+                                <div class="bead-halo"></div>
+                            </div>
+                            
+                            <!-- Бусина 2 -->
+                            <div class="bead bead-2" style="--color: var(--magic-lavender);">
+                                <div class="bead-core">
+                                    <div class="bead-inner-glow"></div>
+                                </div>
+                                <div class="bead-halo"></div>
+                            </div>
+                            
+                            <!-- Бусина 3 -->
+                            <div class="bead bead-3" style="--color: var(--magic-mint);">
+                                <div class="bead-core">
+                                    <div class="bead-inner-glow"></div>
+                                </div>
+                                <div class="bead-halo"></div>
+                            </div>
+                            
+                            <!-- Бусина 4 -->
+                            <div class="bead bead-4" style="--color: var(--magic-peach);">
+                                <div class="bead-core">
+                                    <div class="bead-inner-glow"></div>
+                                </div>
+                                <div class="bead-halo"></div>
+                            </div>
+                            
+                            <!-- Бусина 5 -->
+                            <div class="bead bead-5" style="--color: var(--magic-cyber);">
+                                <div class="bead-core">
+                                    <div class="bead-inner-glow"></div>
+                                </div>
+                                <div class="bead-halo"></div>
+                            </div>
+                            
+                            <!-- Ниточка, соединяющая бусины -->
+                            <div class="beads-thread">
+                                <div class="thread-path"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Деликатная аура -->
+                    <div class="hero-aura" aria-hidden="true">
+                        <div class="aura-circle circle-1"></div>
+                        <div class="aura-circle circle-2"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция методологии -->
+            <section id="methodology" class="methodology-section" aria-labelledby="methodology-title">
+                <div class="methodology-container">
+                    <header class="methodology-header">
+                        <h2 id="methodology-title" class="methodology-title">
+                            <span class="methodology-line">Гармония Этапов</span>
+                        </h2>
+                        <p class="methodology-subtitle">
+                            В Jugaric IT мы верим, что процесс создания не менее важен, чем результат. 
+                            Мы разработали уникальный путь, где каждый этап — это шаг к воплощению 
+                            вашей мечты в цифровое произведение, наполненное смыслом и красотой.
+                        </p>
+                    </header>
+
+                    <!-- Основная линия процесса -->
+                    <div class="process-timeline">
+                        <div class="timeline-path">
+                            <div class="path-line"></div>
+                            <div class="path-dots">
+                                <div class="path-dot dot-1 active"></div>
+                                <div class="path-dot dot-2"></div>
+                                <div class="path-dot dot-3"></div>
+                                <div class="path-dot dot-4"></div>
+                                <div class="path-dot dot-5"></div>
+                            </div>
+                        </div>
+
+                        <!-- Этап 1: Погружение в Суть -->
+                        <article class="process-step step-1 active" tabindex="0">
+                            <div class="step-content">
+                                <div class="step-header">
+                                    <div class="step-number">01</div>
+                                    <div class="step-icon">
+                                        <i data-feather="compass" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <h3 class="step-title">Погружение в Суть</h3>
+                                <div class="step-description">
+                                    <p>
+                                        Мы начинаем с глубокого слушания. Не просто собираем требования, 
+                                        а стремимся понять суть вашей мечты, контекст и скрытые возможности.
+                                    </p>
+                                    <p>
+                                        Внимание к деталям и эмпатия позволяют нам уловить то, 
+                                        что остаётся невысказанным.
+                                    </p>
+                                </div>
+                                <div class="step-principles">
+                                    <span class="principle-tag">Слушание</span>
+                                    <span class="principle-tag">Эмпатия</span>
+                                    <span class="principle-tag">Глубина</span>
+                                </div>
+                            </div>
+                            <div class="step-connection">
+                                <div class="connection-line"></div>
+                            </div>
+                        </article>
+
+                        <!-- Этап 2: Танец Идей -->
+                        <article class="process-step step-2" tabindex="0">
+                            <div class="step-content">
+                                <div class="step-header">
+                                    <div class="step-number">02</div>
+                                    <div class="step-icon">
+                                        <i data-feather="wind" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <h3 class="step-title">Танец Идей</h3>
+                                <div class="step-description">
+                                    <p>
+                                        Здесь рождается магия. Мы превращаем понимание в визуальные концепции 
+                                        и стратегические решения, где каждая идея получает пространство для развития.
+                                    </p>
+                                    <p>
+                                        Экспериментируем с формами, потоками и эмоциями, находя 
+                                        идеальный баланс между красотой и функциональностью.
+                                    </p>
+                                </div>
+                                <div class="step-principles">
+                                    <span class="principle-tag">Исследование</span>
+                                    <span class="principle-tag">Гармония</span>
+                                    <span class="principle-tag">Творчество</span>
+                                </div>
+                            </div>
+                            <div class="step-connection">
+                                <div class="connection-line"></div>
+                            </div>
+                        </article>
+
+                        <!-- Этап 3: Ткачество Кода -->
+                        <article class="process-step step-3" tabindex="0">
+                            <div class="step-content">
+                                <div class="step-header">
+                                    <div class="step-number">03</div>
+                                    <div class="step-icon">
+                                        <i data-feather="pen-tool" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <h3 class="step-title">Ткачество Кода</h3>
+                                <div class="step-description">
+                                    <p>
+                                        Идеи обретают цифровую форму. Мы пишем код как поэзию — 
+                                        чистый, элегантный и осмысленный, где каждый символ 
+                                        имеет значение и гармонию с целым.
+                                    </p>
+                                    <p>
+                                        Архитектура строится с заботой о масштабируемости, 
+                                        производительности и простоте поддержки.
+                                    </p>
+                                </div>
+                                <div class="step-principles">
+                                    <span class="principle-tag">Мастерство</span>
+                                    <span class="principle-tag">Элегантность</span>
+                                    <span class="principle-tag">Структура</span>
+                                </div>
+                            </div>
+                            <div class="step-connection">
+                                <div class="connection-line"></div>
+                            </div>
+                        </article>
+
+                        <!-- Этап 4: Гармонизация -->
+                        <article class="process-step step-4" tabindex="0">
+                            <div class="step-content">
+                                <div class="step-header">
+                                    <div class="step-number">04</div>
+                                    <div class="step-icon">
+                                        <i data-feather="music" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <h3 class="step-title">Гармонизация</h3>
+                                <div class="step-description">
+                                    <p>
+                                        Мы настраиваем каждую деталь, доводя взаимодействие до совершенства. 
+                                        Тестируем, уточняем и шлифуем, создавая бесшовный опыт.
+                                    </p>
+                                    <p>
+                                        На этом этапе проект обретает свою окончательную форму — 
+                                        целостную, отзывчивую и вдохновляющую.
+                                    </p>
+                                </div>
+                                <div class="step-principles">
+                                    <span class="principle-tag">Точность</span>
+                                    <span class="principle-tag">Баланс</span>
+                                    <span class="principle-tag">Совершенство</span>
+                                </div>
+                            </div>
+                            <div class="step-connection">
+                                <div class="connection-line"></div>
+                            </div>
+                        </article>
+
+                        <!-- Этап 5: Расцвет Проекта -->
+                        <article class="process-step step-5" tabindex="0">
+                            <div class="step-content">
+                                <div class="step-header">
+                                    <div class="step-number">05</div>
+                                    <div class="step-icon">
+                                        <i data-feather="flower" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <h3 class="step-title">Расцвет Проекта</h3>
+                                <div class="step-description">
+                                    <p>
+                                        Проект оживает в мире. Мы сопровождаем запуск, обеспечивая 
+                                        плавное внедрение и продолжая развивать решение вместе с вами.
+                                    </p>
+                                    <p>
+                                        Каждый проект — это живой организм, который растёт и 
+                                        адаптируется, оставаясь верным своей изначальной сути.
+                                    </p>
+                                </div>
+                                <div class="step-principles">
+                                    <span class="principle-tag">Эволюция</span>
+                                    <span class="principle-tag">Забота</span>
+                                    <span class="principle-tag">Развитие</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция принципов -->
+            <section id="principles" class="principles-section" aria-labelledby="principles-title">
+                <div class="principles-container">
+                    <header class="principles-header">
+                        <div class="principles-marker">
+                            <span class="marker-text">心</span>
+                        </div>
+                        <h2 id="principles-title" class="principles-title">
+                            Принципы, Которым Мы Следуем
+                        </h2>
+                        <p class="principles-subtitle">
+                            Основа нашего пути — философия, превращающая технические задачи 
+                            в творческие возможности.
+                        </p>
+                    </header>
+
+                    <div class="principles-grid">
+                        <!-- Принцип 1 -->
+                        <article class="principle-card" tabindex="0">
+                            <div class="principle-content">
+                                <div class="principle-icon">
+                                    <i data-feather="eye" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="principle-name">Внимание к Детали</h3>
+                                <p class="principle-description">
+                                    В каждом пикселе, каждой строке кода — внимание и забота. 
+                                    Мы верим, что совершенство рождается из внимания к мелочам.
+                                </p>
+                            </div>
+                            <div class="principle-aura" aria-hidden="true"></div>
+                        </article>
+
+                        <!-- Принцип 2 -->
+                        <article class="principle-card" tabindex="0">
+                            <div class="principle-content">
+                                <div class="principle-icon">
+                                    <i data-feather="heart" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="principle-name">Эмоциональный Интеллект</h3>
+                                <p class="principle-description">
+                                    Мы создаём технологии, которые понимают и уважают человека. 
+                                    Интерфейсы, которые чувствуют, архитектуры, которые думают.
+                                </p>
+                            </div>
+                            <div class="principle-aura" aria-hidden="true"></div>
+                        </article>
+
+                        <!-- Принцип 3 -->
+                        <article class="principle-card" tabindex="0">
+                            <div class="principle-content">
+                                <div class="principle-icon">
+                                    <i data-feather="repeat" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="principle-name">Постоянное Обновление</h3>
+                                <p class="principle-description">
+                                    Мир меняется, и мы меняемся с ним. Учимся, адаптируемся, 
+                                    совершенствуемся — чтобы создавать решения будущего сегодня.
+                                </p>
+                            </div>
+                            <div class="principle-aura" aria-hidden="true"></div>
+                        </article>
+                        
+                        <!-- Принцип 4 -->
+                        <article class="principle-card" tabindex="0">
+                            <div class="principle-content">
+                                <div class="principle-icon">
+                                    <i data-feather="users" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="principle-name">Совместное Созидание</h3>
+                                <p class="principle-description">
+                                    Лучшие идеи рождаются в диалоге. Мы работаем как партнёры, 
+                                    вовлекая вас в каждый этап создания, чтобы результат был по-настоящему вашим.
+                                </p>
+                            </div>
+                            <div class="principle-aura" aria-hidden="true"></div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA секция -->
+            <section id="approach-cta" class="approach-cta" aria-labelledby="cta-title">
+                <div class="cta-container">
+                    <div class="cta-content">
+                        <h2 id="cta-title" class="cta-title">Готовы начать свой путь?</h2>
+                        <p class="cta-subtitle">
+                            Позвольте нам превратить вашу идею в цифровое произведение искусства. 
+                            Свяжитесь с нами, чтобы обсудить ваш проект.
+                        </p>
+                        
+                        <div class="cta-actions">
+                            <a href="contact.html" class="cta-button primary-cta">
+                                <span class="btn-aura"></span>
+                                <span class="btn-text">ОБСУДИТЬ ПРОЕКТ</span>
+                                <i data-feather="arrow-right" class="btn-icon" aria-hidden="true"></i>
+                            </a>
+                            
+                            <a href="projects.html" class="cta-button secondary-cta">
+                                <span class="btn-glow"></span>
+                                <span class="btn-text">НАШИ РАБОТЫ</span>
+                                <i data-feather="eye" class="btn-icon" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-decoration" aria-hidden="true">
+                        <div class="pathway-sparkle s1"></div>
+                        <div class="pathway-sparkle s2"></div>
+                        <div class="pathway-sparkle s3"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Подвал сайта -->
+        <footer class="temple-foundation" aria-label="Основание студии">
+            <div class="foundation-container">
+                <div class="foundation-content">
+                    <div class="foundation-seal" aria-hidden="true">
+                        <div class="final-seal">創</div>
+                    </div>
+                    <div class="foundation-text">
+                        <p class="foundation-line">Jugaric IT — путь творчества</p>
+                        <p class="foundation-line">где каждый проект — это история</p>
+                        <p class="foundation-line">написанная вместе с вами</p>
+                    </div>
+                </div>
+
+                <div class="foundation-links" aria-label="Дополнительные разделы">
+                    <a href="#approach-hero" class="foundation-link">Путь Творения</a>
+                    <a href="#methodology" class="foundation-link">Этапы Работы</a>
+                    <a href="#principles" class="foundation-link">Наши Принципы</a>
+                </div>
+
+                <div class="foundation-energy" aria-hidden="true">
+                    <div class="energy-flow">
+                        <div class="flow-dot dot-1"></div>
+                        <div class="flow-dot dot-2"></div>
+                        <div class="flow-dot dot-3"></div>
+                    </div>
+                    <span class="energy-text">ТВОРЧЕСТВО ТЕЧЁТ</span>
+                </div>
+            </div>
+
+            <div class="foundation-base">
+                <div class="base-ink-flow"></div>
+                <div class="base-copyright">
+                    © 2024 Jugaric IT. Путь, наполненный смыслом.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Скрипты -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Инициализация иконок
+            feather.replace();
+            
+            // Инициализация страницы подходов
+            const approachesPage = new ApproachesPage();
+            approachesPage.init();
+            
+            // Мобильное меню
+            const menuToggle = document.getElementById('menuToggle');
+            const templeNav = document.querySelector('.temple-nav');
+            
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                menuToggle.classList.toggle('active');
+                templeNav.classList.toggle('active');
+            });
+            
+            // Плавная навигация
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Анимация заголовка
+            setTimeout(() => {
+                const letters = document.querySelectorAll('.title-char');
+                letters.forEach((letter, index) => {
+                    setTimeout(() => {
+                        letter.style.opacity = '1';
+                        letter.style.transform = 'translateY(0)';
+                    }, index * 80);
+                });
+            }, 500);
+            
+            // Интерактивная временная шкала
+            const steps = document.querySelectorAll('.process-step');
+            const dots = document.querySelectorAll('.path-dot');
+            
+            steps.forEach((step, index) => {
+                step.addEventListener('mouseenter', () => {
+                    // Активируем соответствующий dot
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    if (dots[index]) {
+                        dots[index].classList.add('active');
+                    }
+                });
+                
+                step.addEventListener('focus', () => {
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    if (dots[index]) {
+                        dots[index].classList.add('active');
+                    }
+                });
+            });
+            
+            // Интерактивность для бусин
+            const beads = document.querySelectorAll('.bead');
+            const stepMap = {
+                'bead-1': '.step-1',
+                'bead-2': '.step-2',
+                'bead-3': '.step-3',
+                'bead-4': '.step-4',
+                'bead-5': '.step-5'
+            };
+            
+            beads.forEach(bead => {
+                bead.addEventListener('mouseenter', () => {
+                    // Усиливаем свечение при наведении
+                    bead.style.transform = 'scale(1.2)';
+                    bead.style.filter = 'brightness(1.3)';
+                    
+                    // Показываем подсказку с цветом
+                    const beadClass = Array.from(bead.classList).find(c => c.startsWith('bead-'));
+                    const colorNames = {
+                        'bead-1': 'Розовый',
+                        'bead-2': 'Лавандовый',
+                        'bead-3': 'Мятный',
+                        'bead-4': 'Персиковый',
+                        'bead-5': 'Голубой'
+                    };
+                    
+                    if (beadClass && colorNames[beadClass]) {
+                        console.log(`🌸 ${colorNames[beadClass]} бусина: цвет нашего творческого процесса`);
+                    }
+                });
+                
+                bead.addEventListener('mouseleave', () => {
+                    bead.style.transform = '';
+                    bead.style.filter = '';
+                });
+                
+                // Клик по бусине
+                bead.addEventListener('click', () => {
+                    const beadClass = Array.from(bead.classList).find(c => c.startsWith('bead-'));
+                    
+                    // Создаём эффект пульсации
+                    bead.style.animation = 'beadClickPulse 0.6s ease';
+                    setTimeout(() => {
+                        bead.style.animation = '';
+                    }, 600);
+                    
+                    // Прокручиваем к соответствующему этапу процесса
+                    if (beadClass && stepMap[beadClass]) {
+                        const step = document.querySelector(stepMap[beadClass]);
+                        if (step) {
+                            step.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+        // Класс страницы подходов
+        class ApproachesPage {
+            constructor() {
+                this.currentStep = 0;
+                this.totalSteps = 5;
+            }
+            
+            init() {
+                this.setupStepAnimations();
+                this.setupScrollAnimations();
+                this.setupInteractiveElements();
+                this.createPathwayEffects();
+            }
+            
+            setupStepAnimations() {
+                // Анимация появления шагов
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            
+                            // Последовательное появление шагов
+                            if (entry.target.classList.contains('process-step')) {
+                                const delay = Array.from(
+                                    document.querySelectorAll('.process-step')
+                                ).indexOf(entry.target) * 200;
+                                
+                                setTimeout(() => {
+                                    entry.target.style.opacity = '1';
+                                    entry.target.style.transform = 'translateY(0)';
+                                }, delay);
+                            }
+                        }
+                    });
+                }, { threshold: 0.2 });
+                
+                // Наблюдаем за шагами процесса
+                document.querySelectorAll('.process-step').forEach(step => {
+                    observer.observe(step);
+                });
+            }
+            
+            setupScrollAnimations() {
+                // Анимация линии процесса при скролле
+                const timeline = document.querySelector('.timeline-path');
+                if (!timeline) return;
+                
+                const pathLine = timeline.querySelector('.path-line');
+                
+                window.addEventListener('scroll', () => {
+                    const rect = timeline.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    
+                    if (rect.top < windowHeight && rect.bottom > 0) {
+                        const progress = 1 - (rect.bottom / (windowHeight + rect.height));
+                        const height = Math.min(100, progress * 100);
+                        pathLine.style.height = `${height}%`;
+                    }
+                });
+            }
+            
+            setupInteractiveElements() {
+                // Интерактивные карточки принципов
+                const principles = document.querySelectorAll('.principle-card');
+                principles.forEach(card => {
+                    card.addEventListener('mouseenter', () => {
+                        card.classList.add('gentle-hover');
+                    });
+                    
+                    card.addEventListener('mouseleave', () => {
+                        card.classList.remove('gentle-hover');
+                    });
+                    
+                    card.addEventListener('focus', () => {
+                        card.classList.add('gentle-hover');
+                    });
+                    
+                    card.addEventListener('blur', () => {
+                        card.classList.remove('gentle-hover');
+                    });
+                });
+                
+                // Интерактивные шаги
+                const steps = document.querySelectorAll('.process-step');
+                steps.forEach(step => {
+                    step.addEventListener('mouseenter', () => {
+                        step.classList.add('step-hover');
+                    });
+                    
+                    step.addEventListener('mouseleave', () => {
+                        step.classList.remove('step-hover');
+                    });
+                });
+            }
+            
+            createPathwayEffects() {
+                // Создаём эффект пути в CTA секции
+                const ctaSection = document.querySelector('.approach-cta');
+                if (!ctaSection) return;
+                
+                const decoration = ctaSection.querySelector('.cta-decoration');
+                if (!decoration) return;
+                
+                // Создаём несколько парящих элементов
+                for (let i = 1; i <= 3; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = `pathway-sparkle s${i}`;
+                    
+                    const size = 2 + Math.random() * 3;
+                    const duration = 8 + Math.random() * 6;
+                    const delay = Math.random() * 4;
+                    
+                    sparkle.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        background: var(--magic-blush);
+                        border-radius: 50%;
+                        filter: blur(0.5px);
+                        opacity: 0;
+                        animation: pathwaySparkle ${duration}s infinite ease-in-out ${delay}s;
+                        z-index: 1;
+                    `;
+                    
+                    // Позиционируем случайно в пределах секции
+                    sparkle.style.left = `${10 + Math.random() * 80}%`;
+                    sparkle.style.top = `${20 + Math.random() * 60}%`;
+                    
+                    decoration.appendChild(sparkle);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

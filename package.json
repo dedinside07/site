@@ -1,0 +1,29 @@
+{
+  "name": "jugaric-it-website",
+  "version": "1.0.0",
+  "description": "Сайт Jugaric IT с админ-панелью",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "setup": "npm install && echo 'Установка завершена'"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.22.1",
+    "helmet": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "portfolio",
+    "agency",
+    "web-design",
+    "admin-panel"
+  ],
+  "author": "Jugaric IT",
+  "license": "MIT",
+  "type": "commonjs"
+}

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugaric IT Admin // Вход</title>
+    <link rel="stylesheet" href="login_styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
+    <style>
+        :root {
+            --admin-primary: #6366f1;
+            --admin-primary-dark: #4f46e5;
+            --admin-secondary: #8b5cf6;
+            --admin-background: #f8fafc;
+            --admin-surface: #ffffff;
+            --admin-border: #e2e8f0;
+            --admin-text: #1e293b;
+            --admin-text-light: #64748b;
+            --admin-success: #10b981;
+            --admin-warning: #f59e0b;
+            --admin-error: #ef4444;
+            --admin-info: #3b82f6;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Парящие частицы -->
+    <div class="login-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Основной контейнер -->
+    <div class="login-container">
+        <!-- Логотип и заголовок -->
+        <div class="login-header">
+            <div class="login-logo">
+                <div class="logo-icon">
+                    <i data-feather="shield" aria-hidden="true"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">JUGARIC IT</span>
+                    <span class="logo-subtitle">Admin Panel</span>
+                </div>
+            </div>
+            <h1 class="login-title">Вход в панель управления</h1>
+            <p class="login-subtitle">
+                Для доступа к заявкам требуется авторизация
+            </p>
+        </div>
+
+        <!-- Форма входа -->
+        <form id="loginForm" class="login-form">
+            <!-- Поле логина -->
+            <div class="form-group">
+                <label for="username" class="form-label">
+                    <i data-feather="user" class="label-icon" aria-hidden="true"></i>
+                    <span>Имя пользователя</span>
+                </label>
+                <div class="input-wrapper">
+                    <input type="text" 
+                           id="username" 
+                           name="username"
+                           class="form-input"
+                           placeholder=" "
+                           required
+                           autocomplete="username">
+                    <div class="input-underline"></div>
+                </div>
+                <div class="form-hint">Введите ваш логин</div>
+            </div>
+
+            <!-- Поле пароля -->
+            <div class="form-group">
+                <label for="password" class="form-label">
+                    <i data-feather="lock" class="label-icon" aria-hidden="true"></i>
+                    <span>Пароль</span>
+                </label>
+                <div class="input-wrapper">
+                    <input type="password" 
+                           id="password" 
+                           name="password"
+                           class="form-input"
+                           placeholder=" "
+                           required
+                           autocomplete="current-password">
+                    <div class="input-underline"></div>
+                    <button type="button" class="password-toggle" id="passwordToggle" aria-label="Показать пароль">
+                        <i data-feather="eye" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="form-hint">Введите ваш пароль</div>
+            </div>
+
+            <!-- Запомнить меня -->
+            <div class="remember-me">
+                <input type="checkbox" id="remember" name="remember" class="checkbox">
+                <label for="remember" class="checkbox-label">
+                    <span class="checkbox-custom"></span>
+                    <span class="checkbox-text">Запомнить меня</span>
+                </label>
+            </div>
+
+            <!-- Сообщения об ошибках -->
+            <div id="errorMessage" class="error-message" style="display: none;">
+                <i data-feather="alert-circle" aria-hidden="true"></i>
+                <span class="error-text"></span>
+            </div>
+
+            <!-- Кнопка входа -->
+            <button type="submit" class="login-button" id="loginButton">
+                <span class="button-text">Войти</span>
+                <i data-feather="log-in" class="button-icon" aria-hidden="true"></i>
+                <div class="button-loader" aria-hidden="true">
+                    <div class="loader-dot"></div>
+                    <div class="loader-dot"></div>
+                    <div class="loader-dot"></div>
+                </div>
+            </button>
+        </form>
+
+        <!-- Информация -->
+        <div class="login-info">
+            <div class="info-item">
+                <i data-feather="info" aria-hidden="true"></i>
+                <span>Доступ только для авторизованного персонала</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Защитный экран -->
+    <div class="security-overlay"></div>
+
+    <script>
+        // Инициализация иконок
+        feather.replace();
+
+        // Переключение видимости пароля
+        const passwordToggle = document.getElementById('passwordToggle');
+        const passwordInput = document.getElementById('password');
+
+        passwordToggle.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Меняем иконку
+            const icon = passwordToggle.querySelector('i');
+            if (type === 'text') {
+                icon.setAttribute('data-feather', 'eye-off');
+            } else {
+                icon.setAttribute('data-feather', 'eye');
+            }
+            feather.replace();
+        });
+
+        // Обработка формы входа
+        const loginForm = document.getElementById('loginForm');
+        const loginButton = document.getElementById('loginButton');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // В login.html замените обработчик формы:
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Получаем данные формы
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const remember = document.getElementById('remember').checked;
+
+    // Валидация
+    if (!username || !password) {
+        showError('Заполните все поля');
+        return;
+    }
+
+    // Показываем загрузку
+    loginButton.disabled = true;
+    const buttonText = loginButton.querySelector('.button-text');
+    const buttonLoader = loginButton.querySelector('.button-loader');
+    
+    buttonText.textContent = 'ВХОД...';
+    buttonLoader.style.display = 'flex';
+
+    try {
+        // Отправляем запрос на сервер
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, remember })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Сохраняем sessionId
+            localStorage.setItem('adminSessionId', result.sessionId);
+            
+            // Перенаправляем в админку
+            window.location.href = '/admin';
+        } else {
+            showError(result.message || 'Ошибка входа');
+        }
+
+    } catch (error) {
+        console.error('Ошибка входа:', error);
+        showError('Ошибка соединения с сервером');
+    } finally {
+        // Восстанавливаем кнопку
+        loginButton.disabled = false;
+        buttonText.textContent = 'Войти';
+        buttonLoader.style.display = 'none';
+    }
+});
+
+        // Функция показа ошибки
+        function showError(message) {
+            errorMessage.style.display = 'flex';
+            errorMessage.querySelector('.error-text').textContent = message;
+            
+            // Автоматически скрываем через 5 секунд
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Проверка авторизации при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+            
+            if (token) {
+                // Проверяем токен
+                fetch('/api/auth/verify', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '/admin';
+                    }
+                })
+                .catch(() => {
+                    // Токен невалидный
+                    localStorage.removeItem('adminToken');
+                    sessionStorage.removeItem('adminToken');
+                });
+            }
+        });
+
+        // Эффект частиц
+        const particlesContainer = document.querySelector('.login-particles');
+        for (let i = 0; i < 10; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 10 + 5;
+            const duration = Math.random() * 10 + 10;
+            const delay = Math.random() * 5;
+            
+            particle.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                animation: float ${duration}s infinite ease-in-out ${delay}s;
+                z-index: -1;
+            `;
+            
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            
+            particlesContainer.appendChild(particle);
+        }
+
+        // Анимация
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% {
+                    transform: translateY(0) translateX(0);
+                    opacity: 0.1;
+                }
+                25% {
+                    transform: translateY(-20px) translateX(10px);
+                    opacity: 0.2;
+                }
+                50% {
+                    transform: translateY(10px) translateX(-10px);
+                    opacity: 0.3;
+                }
+                75% {
+                    transform: translateY(-10px) translateX(15px);
+                    opacity: 0.2;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

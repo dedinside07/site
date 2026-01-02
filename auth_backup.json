@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "$2b$10$IB/8ODopTE4kq7k1dWSLuu1G5z8VZXExSZzAX7luf0gLfFVWmHsti",
+      "role": "admin",
+      "name": "Администратор",
+      "email": "admin@jugaricit.com",
+      "created_at": "2025-12-17T13:27:10.089Z",
+      "updated_at": "2025-12-20T22:20:43.674Z"
+    },
+    {
+      "id": 1766270902856,
+      "username": "katerina",
+      "password": "$2b$10$XbFQV6jniPyOv2plvSJTOOz49NR0b/HFAffz0.H8His9UpH8tRrom",
+      "name": "katerina",
+      "email": "",
+      "role": "manager",
+      "created_at": "2025-12-20T22:48:22.856Z"
+    },
+    {
+      "id": 1766271121223,
+      "username": "durshlag",
+      "password": "$2b$10$sFF8aMuOBKUxf8m3eWoMa.dPVE00bo6jJzd5MD3VW7QLVoQfkGQEO",
+      "name": "durshlag",
+      "email": "",
+      "role": "manager",
+      "created_at": "2025-12-20T22:52:01.223Z"
+    }
+  ]
+}

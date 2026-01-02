@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugaric IT Admin // Панель управления</title>
+    <link rel="stylesheet" href="admin_styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
+</head>
+<body>
+    <!-- Загрузочный экран -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i data-feather="shield" aria-hidden="true"></i>
+            </div>
+            <div class="loading-text">Загрузка панели управления...</div>
+            <div class="loading-progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основной контейнер -->
+    <div class="admin-container" id="adminContainer" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <!-- Логотип -->
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <i data-feather="shield" aria-hidden="true"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">JUGARIC IT</span>
+                    <span class="logo-subtitle">Admin Panel</span>
+                </div>
+            </div>
+
+            <!-- Навигация -->
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="section-title">Основное</div>
+                    <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                        <i data-feather="home" aria-hidden="true"></i>
+                        <span>Главная</span>
+                    </a>
+                    <a href="#submissions" class="nav-link" data-section="submissions">
+                        <i data-feather="inbox" aria-hidden="true"></i>
+                        <span>Заявки</span>
+                        <span class="nav-badge" id="newSubmissionsBadge">0</span>
+                    </a>
+                    <a href="#analytics" class="nav-link" data-section="analytics">
+                        <i data-feather="bar-chart" aria-hidden="true"></i>
+                        <span>Аналитика</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="section-title">Настройки</div>
+                    <a href="#users" class="nav-link" data-section="users">
+                        <i data-feather="users" aria-hidden="true"></i>
+                        <span>Пользователи</span>
+                    </a>
+                    <a href="#security" class="nav-link" data-section="security">
+                        <i data-feather="lock" aria-hidden="true"></i>
+                        <span>Безопасность</span>
+                    </a>
+                    <a href="#settings" class="nav-link" data-section="settings">
+                        <i data-feather="settings" aria-hidden="true"></i>
+                        <span>Настройки</span>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Информация о пользователе -->
+            <div class="sidebar-user">
+                <div class="user-avatar">
+                    <i data-feather="user" aria-hidden="true"></i>
+                </div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Загрузка...</div>
+                    <div class="user-role" id="userRole">Администратор</div>
+                </div>
+                <button class="logout-button" id="logoutButton" title="Выйти">
+                    <i data-feather="log-out" aria-hidden="true"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="admin-main">
+            <!-- Шапка -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1 class="page-title" id="pageTitle">Главная</h1>
+                    <div class="breadcrumbs">
+                        <span class="breadcrumb">Панель управления</span>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb active">Главная</span>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <!-- Поиск -->
+                    <div class="search-container">
+                        <i data-feather="search" class="search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Поиск...">
+                    </div>
+                    
+                    <!-- Уведомления -->
+                    <div class="notifications" id="notifications">
+                        <button class="notification-button" id="notificationButton">
+                            <i data-feather="bell" aria-hidden="true"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="notification-header">
+                                <h3>Уведомления</h3>
+                                <button class="mark-all-read">Прочитать все</button>
+                            </div>
+                            <div class="notification-list" id="notificationList">
+                                <!-- Уведомления будут здесь -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Тема -->
+                    <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                        <i data-feather="moon" class="theme-icon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Контент страниц -->
+            <div class="admin-content">
+                <!-- Dashboard -->
+                <section id="dashboardSection" class="content-section active">
+                    <div class="dashboard-grid">
+                        <!-- Карточки статистики -->
+                        <div class="stat-card total">
+                            <div class="stat-icon">
+                                <i data-feather="inbox" aria-hidden="true"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalSubmissions">0</div>
+                                <div class="stat-label">Всего заявок</div>
+                            </div>
+                            <div class="stat-trend positive">
+                                <i data-feather="trending-up" aria-hidden="true"></i>
+                                <span>+12%</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card new">
+                            <div class="stat-icon">
+                                <i data-feather="file-plus" aria-hidden="true"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="newSubmissions">0</div>
+                                <div class="stat-label">Новых</div>
+                            </div>
+                            <div class="stat-trend positive">
+                                <i data-feather="trending-up" aria-hidden="true"></i>
+                                <span>+5%</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card contacted">
+                            <div class="stat-icon">
+                                <i data-feather="phone" aria-hidden="true"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="contactedSubmissions">0</div>
+                                <div class="stat-label">Связались</div>
+                            </div>
+                            <div class="stat-trend neutral">
+                                <i data-feather="minus" aria-hidden="true"></i>
+                                <span>±0%</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card completed">
+                            <div class="stat-icon">
+                                <i data-feather="check-circle" aria-hidden="true"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="completedSubmissions">0</div>
+                                <div class="stat-label">Завершены</div>
+                            </div>
+                            <div class="stat-trend positive">
+                                <i data-feather="trending-up" aria-hidden="true"></i>
+                                <span>+8%</span>
+                            </div>
+                        </div>
+
+                        <!-- Последние заявки -->
+                        <div class="recent-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Последние заявки</h3>
+                                <a href="#submissions" class="view-all">Все заявки →</a>
+                            </div>
+                            <div class="recent-list" id="recentSubmissionsList">
+                                <!-- Заявки будут здесь -->
+                            </div>
+                        </div>
+
+                        <!-- График активности -->
+                        <div class="chart-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Активность за неделю</h3>
+                                <div class="chart-filter">
+                                    <select class="filter-select">
+                                        <option value="week">Неделя</option>
+                                        <option value="month">Месяц</option>
+                                        <option value="year">Год</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="activityChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Статистика по времени -->
+                        <div class="time-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Активность по времени суток</h3>
+                            </div>
+                            <div class="time-chart">
+                                <div class="time-bar morning">Утро<br><span>32%</span></div>
+                                <div class="time-bar day">День<br><span>45%</span></div>
+                                <div class="time-bar evening">Вечер<br><span>18%</span></div>
+                                <div class="time-bar night">Ночь<br><span>5%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submissions -->
+                <section id="submissionsSection" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Управление заявками</h2>
+                        <div class="section-actions">
+                            <button class="action-button export" id="exportButton">
+                                <i data-feather="download" aria-hidden="true"></i>
+                                <span>Экспорт CSV</span>
+                            </button>
+                            <button class="action-button refresh" id="refreshButton">
+                                <i data-feather="refresh-cw" aria-hidden="true"></i>
+                                <span>Обновить</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Фильтры -->
+                    <div class="filters-container">
+                        <div class="filter-group">
+                            <label for="statusFilter">Статус:</label>
+                            <select id="statusFilter" class="filter-select">
+                                <option value="all">Все статусы</option>
+                                <option value="new">Новые</option>
+                                <option value="viewed">Просмотрены</option>
+                                <option value="contacted">Связались</option>
+                                <option value="completed">Завершены</option>
+                                <option value="rejected">Отклонены</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="dateFilter">Дата:</label>
+                            <select id="dateFilter" class="filter-select">
+                                <option value="all">За все время</option>
+                                <option value="today">Сегодня</option>
+                                <option value="week">Эта неделя</option>
+                                <option value="month">Этот месяц</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="searchInput">Поиск:</label>
+                            <div class="search-wrapper">
+                                <i data-feather="search" class="search-icon-small"></i>
+                                <input type="text" id="searchInput" placeholder="Имя, email, телефон...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Таблица заявок -->
+                    <div class="table-container">
+                        <table class="submissions-table" id="submissionsTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="selectAll">
+                                    </th>
+                                    <th>Имя</th>
+                                    <th>Контакты</th>
+                                    <th>Дата</th>
+                                    <th>Статус</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="submissionsTableBody">
+                                <!-- Заявки будут здесь -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Пагинация -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            Показано <span id="showingCount">0</span> из <span id="totalCount">0</span> заявок
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="pagination-button prev" disabled>
+                                <i data-feather="chevron-left" aria-hidden="true"></i>
+                            </button>
+                            <div class="pagination-numbers">
+                                <!-- Номера страниц будут здесь -->
+                            </div>
+                            <button class="pagination-button next">
+                                <i data-feather="chevron-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics -->
+                <section id="analyticsSection" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Аналитика и отчеты</h2>
+                    </div>
+                    <div class="analytics-grid">
+                        <!-- Будет реализовано позже -->
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Модальное окно деталей заявки -->
+        <div class="modal" id="submissionModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Детали заявки</h3>
+                    <button class="modal-close" id="modalClose">
+                        <i data-feather="x" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="submissionDetails">
+                    <!-- Детали будут здесь -->
+                </div>
+                <div class="modal-footer">
+                    <div class="status-actions">
+                        <select class="status-select" id="modalStatusSelect">
+                            <option value="new">Новая</option>
+                            <option value="viewed">Просмотрена</option>
+                            <option value="contacted">Связались</option>
+                            <option value="completed">Завершена</option>
+                            <option value="rejected">Отклонена</option>
+                        </select>
+                        <button class="action-button save-status" id="saveStatusButton">
+                            <i data-feather="save" aria-hidden="true"></i>
+                            <span>Сохранить статус</span>
+                        </button>
+                    </div>
+                    <button class="action-button delete" id="deleteSubmissionButton">
+                        <i data-feather="trash-2" aria-hidden="true"></i>
+                        <span>Удалить</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="admin_script.js"></script>
+    <script>
+        // Инициализация иконок
+        feather.replace();
+    </script>
+</body>
+</html>
